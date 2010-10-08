@@ -1,0 +1,31 @@
+transport
+	CLOCK
+	PLAY/PAUSE
+	REWIND
+	FASTFORWARD
+	RECORD
+	SEEK
+
+file management
+	load
+	save
+	undo
+	copy
+	paste
+	buffer loading system
+
+heirarchy of patterns
+	channel
+	song
+	bar
+	part
+	variation
+
+gui objects
+	bang
+	toggle
+	hslider
+	VSLIDER
+	hradio
+	vradio
+	number2
