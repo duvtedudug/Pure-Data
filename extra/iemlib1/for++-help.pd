@@ -1,0 +1,74 @@
+#N canvas 324 220 748 404 10;
+#X obj 25 52 bng 15 250 50 0 empty empty empty 8 -8 0 10 -262144 -1
+-1;
+#X obj 65 186 bng 15 250 50 0 empty empty empty 8 -8 0 10 -262144 -1
+-1;
+#X floatatom 65 61 4 0 0 0 - - -;
+#X floatatom 115 88 4 0 0 0 - - -;
+#X floatatom 65 163 4 0 0 0 - - -;
+#X floatatom 165 110 4 0 0 0 - - -;
+#X text 7 8 for++;
+#X obj 65 132 for++ 10 20 200;
+#X obj 111 166 print;
+#X msg 25 71 start;
+#X msg 25 91 stop;
+#X text 64 47 <int> first number;
+#X text 115 72 <int> last number;
+#X obj 237 213 bng 15 250 50 0 empty empty empty 8 -8 0 10 -262144
+-1 -1;
+#X floatatom 237 190 4 0 0 0 - - -;
+#X obj 280 186 print;
+#X obj 237 143 bng 15 250 50 0 empty empty empty 8 -8 0 10 -262144
+-1 -1;
+#X text 343 48 2.arg: <int> last number;
+#X text 343 36 1.arg: <int> first number;
+#X obj 237 162 for++ 50 40 100;
+#X obj 165 166 bng 15 250 50 0 empty empty empty 8 -8 0 10 -262144
+-1 -1;
+#X obj 337 193 bng 15 250 50 0 empty empty empty 8 -8 0 10 -262144
+-1 -1;
+#X text 163 181 finished;
+#X text 336 208 finished;
+#X obj 237 264 print finished;
+#X obj 509 141 bng 15 250 50 0 empty empty empty 8 -8 0 10 -262144
+-1 -1;
+#X obj 629 184 bng 15 250 50 0 empty empty empty 8 -8 0 10 -262144
+-1 -1;
+#X text 628 199 finished;
+#X obj 509 208 timer;
+#X obj 509 183 sel 0 1000;
+#X floatatom 509 231 5 0 0 0 - - -;
+#X obj 509 160 for++ 0 1000 1.234;
+#X text 343 60 3.arg: <float> increment-delay in ms;
+#X text 159 92 <float> increment-delay in ms;
+#X text 85 20 increment-step-size is allways 1 or -1;
+#X text 78 257 IEM KUG;
+#X text 62 245 musil;
+#X text 92 245 @;
+#X text 98 245 iem.at;
+#X text 13 234 (c) Thomas Musil 2000 - 2005;
+#X text 61 267 Graz \, Austria;
+#X text 67 9 counter with its own interval-timer;
+#X connect 0 0 7 0;
+#X connect 2 0 7 0;
+#X connect 3 0 7 1;
+#X connect 4 0 1 0;
+#X connect 5 0 7 2;
+#X connect 7 0 4 0;
+#X connect 7 0 8 0;
+#X connect 7 1 20 0;
+#X connect 9 0 7 0;
+#X connect 10 0 7 0;
+#X connect 14 0 13 0;
+#X connect 16 0 19 0;
+#X connect 19 0 14 0;
+#X connect 19 0 15 0;
+#X connect 19 1 21 0;
+#X connect 20 0 24 0;
+#X connect 21 0 24 0;
+#X connect 25 0 31 0;
+#X connect 28 0 30 0;
+#X connect 29 0 28 0;
+#X connect 29 1 28 1;
+#X connect 31 0 29 0;
+#X connect 31 1 26 0;
