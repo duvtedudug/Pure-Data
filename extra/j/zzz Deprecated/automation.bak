@@ -1,0 +1,49 @@
+#N canvas 133 5 1006 673 12;
+#X msg 286 357 rewind;
+#X msg 385 383 clear;
+#X obj 96 234 timer;
+#X obj 70 135 t f b b;
+#X obj 530 462 loadbang;
+#X msg 209 324 bang;
+#X msg 70 373 add \$2 \$3 \$1;
+#X obj 125 530 print;
+#X obj 125 505 qlist;
+#X obj 291 163 t b b b;
+#X msg 459 421 write \$1/txt;
+#X msg 530 485 read \$1/txt;
+#X obj 70 349 pack f f \$1;
+#X obj 30 12 inlet;
+#X obj 209 302 r play;
+#X obj 297 333 r stop;
+#X obj 459 398 r save;
+#X obj 291 138 r record;
+#X obj 30 636 outlet;
+#X text 777 254 PLAY \; STOP (and rewind) \; RECORD (clears first)
+\; SAVE \; \; \; TODO----------------- \; goto \; record \; \; read
+automation \; write automation \; \; save \; load \; copy \; paste
+\; undo \; \; think about songs \; how to overdub \; \; why does it
+loop?;
+#X text 454 51 Simple Automation Recorder \; \; \$1 Name of object's
+receiver to be automated \; (also used to save filename);
+#X connect 0 0 8 0;
+#X connect 1 0 8 0;
+#X connect 2 0 12 1;
+#X connect 3 0 12 0;
+#X connect 3 1 2 0;
+#X connect 3 2 2 1;
+#X connect 4 0 11 0;
+#X connect 5 0 8 0;
+#X connect 6 0 8 0;
+#X connect 8 0 7 0;
+#X connect 9 0 2 0;
+#X connect 9 1 0 0;
+#X connect 9 2 1 0;
+#X connect 10 0 8 0;
+#X connect 11 0 8 0;
+#X connect 12 0 6 0;
+#X connect 13 0 3 0;
+#X connect 13 0 18 0;
+#X connect 14 0 5 0;
+#X connect 15 0 0 0;
+#X connect 16 0 10 0;
+#X connect 17 0 9 0;

@@ -8,7 +8,7 @@
 #X text 126 6 Simple Waveplayer;
 #X obj 12 12 bng 15 250 50 0 empty empty Load_File 17 7 1 10 -228856
 -1 -1;
-#X obj 12 46 tgl 15 0 empty empty Play/Stop 17 7 1 10 -257985 -1 -1
+#X obj 12 46 tgl 15 0 empty empty Play.Stop 17 7 1 10 -257985 -1 -1
 0 1;
 #X obj 255 93 f;
 #X obj 229 41 t f b;

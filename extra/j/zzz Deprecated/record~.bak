@@ -1,0 +1,45 @@
+#N canvas 74 71 582 285 12;
+#X obj 4 3 inlet~;
+#X obj 74 3 inlet~;
+#X obj 80 241 writesf~ 2;
+#X obj 154 96 sel 1 0;
+#X msg 87 201 start;
+#X msg 141 201 stop;
+#X obj 154 121 t b b;
+#X obj 191 146 int 0;
+#X obj 238 146 + 1;
+#X obj 152 22 bng 15 250 50 0 empty empty File 17 7 1 10 -228856 -1
+-1;
+#X obj 152 56 tgl 15 0 empty empty Rec/Stop 17 7 1 10 -257985 -1 -1
+0 1;
+#X obj 433 130 symbol;
+#X obj 152 39 tgl 15 0 empty empty 24bit 17 7 1 10 -228856 -1 -1 1
+1;
+#X obj 433 105 savepanel;
+#X obj 287 10 loadbang;
+#X obj 352 168 pack f f s;
+#X msg 352 192 open -bytes \$2 \$3\$1/wav;
+#X obj 313 125 + 2;
+#X msg 287 35 0;
+#X connect 0 0 2 0;
+#X connect 1 0 2 1;
+#X connect 3 0 6 0;
+#X connect 3 1 5 0;
+#X connect 4 0 2 0;
+#X connect 5 0 2 0;
+#X connect 6 0 4 0;
+#X connect 6 1 7 0;
+#X connect 7 0 8 0;
+#X connect 7 0 15 0;
+#X connect 8 0 7 1;
+#X connect 9 0 13 0;
+#X connect 10 0 3 0;
+#X connect 11 0 15 2;
+#X connect 12 0 17 0;
+#X connect 13 0 11 0;
+#X connect 14 0 18 0;
+#X connect 15 0 16 0;
+#X connect 16 0 2 0;
+#X connect 17 0 15 1;
+#X connect 18 0 12 0;
+#X coords 0 -1 1 1 74 53 2 150 20;

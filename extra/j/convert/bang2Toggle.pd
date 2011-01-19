@@ -1,0 +1,16 @@
+#N canvas 0 0 272 193 12;
+#X obj -22 158 outlet;
+#X obj 13 93 + 1;
+#X obj -22 3 inlet;
+#X text 57 136 Arg = initial value;
+#X obj -22 115 & 1;
+#X obj 59 7 loadbang;
+#X obj -22 93 int;
+#X obj 59 29 f \$1;
+#X connect 1 0 6 1;
+#X connect 2 0 6 0;
+#X connect 4 0 0 0;
+#X connect 5 0 7 0;
+#X connect 6 0 1 0;
+#X connect 6 0 4 0;
+#X connect 7 0 6 0;

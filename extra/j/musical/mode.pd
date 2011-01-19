@@ -1,0 +1,98 @@
+#N canvas 251 186 917 416 12;
+#X obj 6 -94 inlet;
+#X obj 6 209 outlet;
+#X obj 202 52 vradio 15 1 0 7 sendMode\$1 mode\$1 empty 0 -8 0 10 -228856
+-1 -1 0;
+#X obj 219 53 cnv 13 88 13 empty empty Ionian 0 7 1 10 -257985 -66577
+0;
+#X obj 219 68 cnv 13 88 13 empty empty Dorian 0 7 1 10 -257985 -66577
+0;
+#X obj 219 83 cnv 13 88 13 empty empty Phrygian 0 7 1 10 -257985 -66577
+0;
+#X obj 219 98 cnv 13 88 13 empty empty Lydian 0 7 1 10 -257985 -66577
+0;
+#X obj 219 113 cnv 13 88 13 empty empty Mixolydian 0 7 1 10 -257985
+-66577 0;
+#X obj 219 128 cnv 13 88 13 empty empty Aeolian 0 7 1 10 -257985 -66577
+0;
+#X obj 219 143 cnv 13 88 13 empty empty Locrian 0 7 1 10 -257985 -66577
+0;
+#X obj 137 12 table array\$1 7;
+#X obj 267 12 table params\$1 2;
+#X obj 565 -5 r sendMode\$1;
+#X obj 6 113 tabread array\$1;
+#X msg 321 82 \; array\$1 read ionian.txt;
+#X obj 321 59 symbol \$1;
+#X obj 382 121 symbol \$1;
+#X obj 465 184 symbol \$1;
+#X obj 526 246 symbol \$1;
+#X obj 565 19 sel 0 1 2 3 4 5 6;
+#X obj 544 60 symbol \$1;
+#X obj 605 122 symbol \$1;
+#X obj 688 185 symbol \$1;
+#X msg 382 144 \; array\$1 read dorian.txt;
+#X msg 465 207 \; array\$1 read phrygian.txt;
+#X msg 526 269 \; array\$1 read lydian.txt;
+#X msg 544 83 \; array\$1 read mixolydian.txt;
+#X msg 605 145 \; array\$1 read aeolian.txt;
+#X msg 688 208 \; array\$1 read locrian.txt;
+#X obj 6 -56 int;
+#X obj 482 10 loadbang;
+#N canvas 0 0 450 233 linkParamsToParamsTable 0;
+#X obj 12 46 pack f 0;
+#X obj 12 92 tabwrite params\$1;
+#X obj 12 21 r sendMode\$1;
+#X obj 308 13 r refreshGui\$1;
+#X obj 260 72 tabread params\$1;
+#X obj 260 97 s mode\$1;
+#X msg 260 47 0;
+#X obj 116 21 r sendOffset\$1;
+#X obj 276 156 tabread params\$1;
+#X obj 276 181 s offset\$1;
+#X msg 276 130 1;
+#X obj 116 46 pack f 1;
+#X connect 0 0 1 0;
+#X connect 2 0 0 0;
+#X connect 3 0 6 0;
+#X connect 3 0 10 0;
+#X connect 4 0 5 0;
+#X connect 6 0 4 0;
+#X connect 7 0 11 0;
+#X connect 8 0 9 0;
+#X connect 10 0 8 0;
+#X connect 11 0 1 0;
+#X restore 480 -34 pd linkParamsToParamsTable;
+#X obj 6 158 + 0;
+#X obj 202 159 nbx 5 14 -1e+037 1e+037 0 0 sendOffset\$1 offset\$1
+empty 0 -8 1 10 -262144 -1 -1 4 256;
+#X obj 252 159 cnv 13 54 13 empty empty Offset 0 7 1 10 -257985 -66577
+0;
+#X text 136 -93 takes note numbers from 0-6 and \; outputs standard
+midi note numbers \; from 0-11 according to the 7 \; classical modes
+\; \; \$1 = Instance name i.e 'Synth1Mode' \;;
+#X obj 455 -81 j.file.loadSaveParams \$1 Synth;
+#X obj 455 -59 j.file.pasteNextParams \$1 Synth;
+#X text 722 -80 <-arbitrarily choosing \; to receive \; 'partNumberSynth'
+as \; the global current \; pattern number.;
+#X connect 0 0 29 0;
+#X connect 12 0 19 0;
+#X connect 13 0 32 0;
+#X connect 15 0 14 0;
+#X connect 16 0 23 0;
+#X connect 17 0 24 0;
+#X connect 18 0 25 0;
+#X connect 19 0 15 0;
+#X connect 19 1 16 0;
+#X connect 19 2 17 0;
+#X connect 19 3 18 0;
+#X connect 19 4 20 0;
+#X connect 19 5 21 0;
+#X connect 19 6 22 0;
+#X connect 20 0 26 0;
+#X connect 21 0 27 0;
+#X connect 22 0 28 0;
+#X connect 29 0 13 0;
+#X connect 30 0 15 0;
+#X connect 32 0 1 0;
+#X connect 33 0 32 1;
+#X coords 0 -1 1 1 109 125 2 200 50;

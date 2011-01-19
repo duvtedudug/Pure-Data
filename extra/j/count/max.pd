@@ -1,0 +1,15 @@
+#N canvas 437 210 424 298 12;
+#X obj 8 140 max;
+#X obj 59 140 f;
+#X msg 59 110 0;
+#X text 92 109 reset;
+#X obj 8 8 inlet;
+#X obj 8 264 outlet;
+#X obj 59 8 inlet reset;
+#X text 155 195 Outputs the highest value in \; history.;
+#X connect 0 0 1 0;
+#X connect 0 0 5 0;
+#X connect 1 0 0 1;
+#X connect 2 0 1 0;
+#X connect 4 0 0 0;
+#X connect 6 0 2 0;

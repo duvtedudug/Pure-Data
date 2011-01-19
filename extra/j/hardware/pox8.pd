@@ -1,0 +1,81 @@
+#N canvas 100 17 969 462 12;
+#X obj 213 102 hsl 46 15 0 127 0 0 send-1Pox8 1Pox8 battCC5 2 8 1 8
+-228856 -1 -1 0 1;
+#X obj 266 102 hsl 46 15 0 127 0 0 send-2Pox8 2Pox8 battCC6 2 8 1 8
+-191407 -1 -1 0 1;
+#X obj 319 102 hsl 46 15 0 127 0 0 send-3Pox8 3Pox8 battCC7 2 8 1 8
+-162280 -1 -1 0 1;
+#X obj 372 102 hsl 46 15 0 127 0 0 send-4Pox8 4Pox8 battCC8 2 8 1 8
+-128992 -1 -1 0 1;
+#X obj 217 119 hsl 46 15 0 127 0 0 send-5Pox8 5Pox8 looper1 2 8 1 8
+-228856 -1 -1 0 1;
+#X obj 270 119 hsl 46 15 0 127 0 0 send-6Pox8 6Pox8 looper2 2 8 1 8
+-191407 -1 -1 0 1;
+#X obj 323 119 hsl 46 15 0 127 0 0 send-7Pox8 7Pox8 looper3 2 8 1 8
+-162280 -1 -1 0 1;
+#X obj 376 119 hsl 46 15 0 127 0 0 send-8Pox8 8Pox8 looper4 2 8 1 8
+-128992 -1 -1 0 1;
+#X obj 167 104 vsl 15 85 0 127 0 0 send-0Pox8Drums 0Pox8 empty 17 8
+1 8 -33289 -1 -1 6151 1;
+#X obj 119 104 vsl 15 85 0 127 0 0 drumsLooper empty looper 17 8 1
+8 -191407 -1 -1 0 1;
+#X obj 102 104 vsl 15 85 0 16383 0 0 empty empty empty 0 -8 0 8 -162280
+-1 -1 0 1;
+#X obj 167 282 clip 0 8192;
+#X obj 15 282 clip 8192 16383;
+#X obj 50 334 / 8192;
+#X obj 50 311 - 8192;
+#X obj 167 307 / 8192;
+#X obj 167 330 * -1;
+#X obj 167 353 + 1;
+#X obj 167 376 * 128;
+#X obj 50 358 * 128;
+#X text 401 44 john's pox8;
+#X text 644 61 donal's carillon;
+#X obj 258 4 ctlin 70 \$1;
+#X obj 266 27 ctlin 74 \$1;
+#X obj 353 4 ctlin 71 \$1;
+#X obj 361 27 ctlin 75 \$1;
+#X obj 448 4 ctlin 72 \$1;
+#X obj 456 27 ctlin 76 \$1;
+#X obj 543 4 ctlin 73 \$1;
+#X obj 551 27 ctlin 77 \$1;
+#X obj 519 79 ctlin 74 \$1;
+#X obj 527 102 ctlin 16 \$1;
+#X obj 614 79 ctlin 71 \$1;
+#X obj 622 102 ctlin 80 \$1;
+#X obj 709 79 ctlin 81 \$1;
+#X obj 717 102 ctlin 19 \$1;
+#X obj 804 79 ctlin 91 \$1;
+#X obj 812 102 ctlin 2 \$1;
+#X obj 23 8 bendin \$1;
+#X obj 60 30 ctlin 1 \$1;
+#X obj 171 28 ctlin 7 \$1;
+#X text 695 8 \$1 = Midi Channel Number;
+#X obj 324 177 cnv 15 100 15 empty empty Pox8-(\$1) 2 7 1 14 -233017
+-66577 0;
+#X obj 39 421 s send-12Akai;
+#X obj 173 421 s send-13Akai;
+#X connect 10 0 12 0;
+#X connect 10 0 11 0;
+#X connect 11 0 15 0;
+#X connect 12 0 14 0;
+#X connect 13 0 19 0;
+#X connect 14 0 13 0;
+#X connect 15 0 16 0;
+#X connect 16 0 17 0;
+#X connect 17 0 18 0;
+#X connect 18 0 44 0;
+#X connect 19 0 43 0;
+#X connect 30 0 0 0;
+#X connect 31 0 4 0;
+#X connect 32 0 1 0;
+#X connect 33 0 5 0;
+#X connect 34 0 2 0;
+#X connect 35 0 6 0;
+#X connect 36 0 3 0;
+#X connect 37 0 7 0;
+#X connect 38 0 10 0;
+#X connect 39 0 9 0;
+#X connect 40 0 8 0;
+#X coords 0 -1 1 1 326 94 2 100 100;
