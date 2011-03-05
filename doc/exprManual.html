@@ -1,0 +1,941 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+
+
+                                                                         
+ 
+  <meta name="MSSmartTagsPreventParsing" content="TRUE">
+                        
+  <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+  <title>Expr Family Objects by Shahrokh Yadegari</title>
+</head><body bgcolor="#ffffff" text="#000000" vlink="#a0522d" link="#333399">
+                   
+<h2><br>
+          <font face="Helvetica, Arial, sans-serif">Expr family objects by
+ </font><font face="Helvetica, Arial, sans-serif"><a href="http://crca.ucsd.edu/%7Esyadegar/index.html"> 
+            Shahrokh  Yadegari</a>     </font></h2>
+                   To see a directory listing of downloadable files, which
+ also   inlcudes     older releases, <a href="http://crca.ucsd.edu/%7Esyadegar/download">  click here</a>
+             .<br>
+          <br>
+                 Back to the <a href="http://crca.ucsd.edu/%7Esyadegar/software.html">Software Page</a>  
+  <br>
+                   
+<hr align="left" size="2" width="100%">          
+<h3><font face="Helvetica, Arial, sans-serif">Expr, Expr~, Fexpr~</font></h3>
+          <small>Based on original sources from IRCAM's </small><small><font face="ockquHelvetica, Arial, sans-serif"><a href="http://www.ircam.fr/jmax">        jMax </a>     </font></small><br>
+          <small>Released under GNU's General Public License.<br>
+          </small><font face="Helvetica, Arial, sans-serif"><br>
+             The <b>expr</b> family is composed of C-like expression evaluation 
+   objects      for graphical music languages, such as </font><font face="Helvetica, Arial, sans-serif"><a href="http://www.crca.ucsd.edu/%7Emsp/software.html">              Pd</a> 
+ &nbsp;</font><font face="ockquHelvetica, Arial, sans-serif"> and <a href="http://www.cycling74.com/products/maxmsp.html">              Max/MSP</a> 
+               .</font><small><font face="ockquHelvetica, Arial, sans-serif">     </font></small><br>
+  <br>
+  <a href="http://www.crca.ucsd.edu/%7Esyadegar/download/expr-0.4-linux.tar.gz"><font face="Helvetica, Arial, sans-serif">           expr, expr~, fexpr~     </font></a><a href="http://www.crca.ucsd.edu/%7Esyadegar/download/expr-0.4-linux.tar.gz"><font face="Helvetica, Arial, sans-serif">   version 0.4</font></a><font face="Helvetica, Arial, sans-serif"> for </font><font face="Helvetica, Arial, sans-serif"><a href="http://www.crca.ucsd.edu/%7Emsp/software.html">              Pd</a> 
+         </font><font face="Helvetica, Arial, sans-serif">    (Sources, and
+  compiled        objects for Linux)</font><br>
+          <font face="Helvetica, Arial, sans-serif"><a href="http://www.crca.ucsd.edu/%7Eyadegari/download/expr%7E-0.3Beta-MSP.sit.hqx"><br>
+          expr~ version 0.3</a>  for Max/MSP             (Objects and help
+ files,  compiled and tested on Max/MSP 4.0.5)</font><br>
+          fexpr for MSP will apear here soon.<br>
+          <font face="Helvetica, Arial, sans-serif"><br>
+          </font>     
+<center><font face="Helvetica, Arial, sans-serif"><img src="exprManual_files/rule01.gif" width="468" height="22">
+ </font>    </center>
+     <font face="Helvetica, Arial, sans-serif"><big><b>New Additions in 
+version 0.4</b></big></font><font face="Helvetica, Arial, sans-serif"><big><small><br>
+     <br>
+     </small></big></font>     
+<ul>
+       <li><font face="Helvetica, Arial, sans-serif"><big><small>Expr,  expr~, 
+ and fexpr~ now support multiple expressions separated by semicolons  which 
+ results in multiple outlets.</small></big></font></li>
+       <li><font face="Helvetica, Arial, sans-serif">Variables are supported 
+now in the same way they are supported in  C. Variables have to be defined 
+with the "value" object prior to execution.</font></li>
+       <li><font face="Helvetica, Arial, sans-serif">A new if function&nbsp; 
+if (condition-expression, IfTure-expression,   IfFalse-expression) has been 
+added.</font></li>
+       <li><font face="Helvetica, Arial, sans-serif">New math functions added.</font></li>
+       <li><font face="Helvetica, Arial, sans-serif">New shorthand notations 
+for fexpr~ have been added.</font></li>
+   
+</ul>
+   
+<blockquote>      
+  <ul>
+      <li><font face="Helvetica, Arial, sans-serif">$x -&gt;$x1[0] &nbsp; 
+&nbsp; $x# -&gt; $x#[0]<br>
+       </font>     </li>
+      <li><font face="Helvetica, Arial, sans-serif">$y = $y1[-1] and $y#
+= $y#[-1]</font></li>
+       
+  </ul>
+  </blockquote>
+   
+<ul>
+    <li><font face="Helvetica, Arial, sans-serif">New 'set' and 'clear' methods 
+were added for fexpr~</font></li>
+       
+  <ul>
+      <li><font face="Helvetica, Arial, sans-serif">clear - clears all the 
+past input and output buffers</font></li>
+      <li><font face="Helvetica, Arial, sans-serif">clear x# - clears all
+the past values of the #th input</font></li>
+      <li><font face="Helvetica, Arial, sans-serif">clear y# - clears all
+the past values of the #th output</font></li>
+      <li><font face="Helvetica, Arial, sans-serif">set x# val-1 val-2 ... 
+- sets as many supplied value of the #th input;</font></li>
+   
+  </ul>
+   
+  <ul>
+     
+    <ul>
+       <li><font face="Helvetica, Arial, sans-serif">e.g., "set x2 3.4 0.4" 
+&nbsp;- sets x2[-1]=3.4 and x2[-2]=0.4</font></li>
+     
+    </ul>
+   
+  </ul>
+   
+  <ul>
+      <li><font face="Helvetica, Arial, sans-serif">set y# val-1 val-2 ... 
+- sets as many supplied values of the #th output;</font></li>
+   
+  </ul>
+   
+  <ul>
+     
+    <ul>
+       <li><font face="Helvetica, Arial, sans-serif">e.g, "set y3 1.1 3.3 
+4.5" -&nbsp; sets y3[-1]=1.1 y3[-2]=3.3 and y3[-3]=4.5;</font></li>
+     
+    </ul>
+   
+  </ul>
+   
+  <ul>
+      <li><font face="Helvetica, Arial, sans-serif">set val val ... - sets 
+the first past values of each output; e.g.,</font></li>
+     
+    <ul>
+       <li><font face="Helvetica, Arial, sans-serif">e.g., "set 0.1 2.2 0.4" 
+&nbsp;- sets y1[-1]=0.1, y2[-1]=2.2, y3[-1]=0.4</font><br>
+        <br>
+      </li>
+     
+    </ul>
+       
+  </ul>
+   
+</ul>
+   
+<ul>
+         
+</ul>
+               
+<center><img src="exprManual_files/rule01.gif" width="468" height="22">
+          </center>
+          <br>
+          <font face="Helvetica, Arial, sans-serif"><b>expr</b> runs in control 
+   rate      and evaluates C-like expressions. See below for the <a href="#ops">  list   of </a>     </font><a href="#ops"><font face="Helvetica, Arial, sans-serif">operators</font></a>     <font face="Helvetica, Arial, sans-serif">. Multiple expressions separated by semicolon
+can be defined in a single expr object which result in multiple outlets.
+Expressoin are evaluated from right to left &nbsp;(which means that the last
+expression defined will be the first executed.) Access to inlets in <b>expr</b>
+  take   a few different forms:<br>
+          </font>          
+<blockquote>                              
+  <table border="0" cellpadding="0" cellspacing="0" width="500">
+              <tbody>
+                <tr>
+                  <td valign="top" width="50"><small><font face="Helvetica, Arial, sans-serif">            $i1 - $i9</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                  </font></small></td>
+                  <td valign="top"><small><font face="Helvetica, Arial, sans-serif">            the first nine inlets taken 
+  as integers</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                  </font></small></td>
+                </tr>
+                <tr>
+                  <td valign="top" width="50"><small><font face="Helvetica, Arial, sans-serif">            $f1 - $f9</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                  </font></small></td>
+                  <td valign="top"><small><font face="Helvetica, Arial, sans-serif">             the first nine inlets taken 
+  as floats</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                  </font></small></td>
+                </tr>
+                <tr>
+                  <td valign="top" width="60"><small><font face="Helvetica, Arial, sans-serif">            $s1 - $s9</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                  </font></small></td>
+                  <td valign="top"><small><font face="Helvetica, Arial, sans-serif">            the first nine inlets taken 
+  as symbols (currently symbols are used   for   table  lookups)</font></small><br>
+                  </td>
+                </tr>
+                                                           
+    </tbody>                              
+  </table>
+            </blockquote>
+            <font face="Helvetica, Arial, sans-serif">Tables and variables
+ can  be accessed the    same way one dimensional arrays are accessed in
+C;  for  example, "valx + 10" will be evaluated to the value of variable
+'valx'  + 10 (variables have to be defined using the 'value' object) and
+"tabname[5]"       will be evaluated to be the 5th element of table "tabname".
+The name  of    the  table can be a variable as well; for example "$s2[5]"
+will be evaluated    to  be the 5 element of the array whose symbol has been
+passed in inlet  2.<br>
+            <br>
+             Type conversion is done either automatically or explicitly by
+ the   use   functions. See below for the <a href="#funcs">list of functions</a> 
+          .<br>
+            </font><br>
+                             
+<center><img src="exprManual_files/rule01.gif" width="468" height="22">
+            </center>
+            <br>
+            <font face="Helvetica, Arial, sans-serif"><b>expr~</b></font><font face="Helvetica, Arial, sans-serif">       is designed to efficiently combine 
+  signal and control stream</font><font face="Helvetica, Arial, sans-serif">        processing by vector operations 
+  on the basis of the audio buffer size</font><font face="Helvetica, Arial, sans-serif">     of the environment. The operations, 
+  functions, and syntax for <b>expr~</b>     is just like <b>expr</b>  with 
+  the addition the <b>$v</b> variable for  signale input. The accepted inlets 
+  for expr~ are as follows:</font><font face="Helvetica, Arial, sans-serif">       <br>
+            </font>                    
+<blockquote>                                        
+  <table border="0" cellpadding="0" cellspacing="0" width="500">
+                <tbody>
+                  <tr>
+                    <td valign="top" width="50"><small><font face="Helvetica, Arial, sans-serif">            $i1 - $i9</font></small><br>
+                    </td>
+                    <td valign="top"><small><font face="Helvetica, Arial, sans-serif">            the first nine inlets taken 
+  as integers</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                    </font></small></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" width="50"><small><font face="Helvetica, Arial, sans-serif">            $f1 - $f9</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                    </font></small></td>
+                    <td valign="top"><small><font face="Helvetica, Arial, sans-serif">             the first nine inlets taken 
+  as floats</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                    </font></small></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" width="60"><small><font face="Helvetica, Arial, sans-serif">            $s1 - $s9</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                    </font></small></td>
+                    <td valign="top"><small><font face="Helvetica, Arial, sans-serif">            the first nine inlets taken 
+  as symbols (currently symbols are used   for   table  lookups)</font></small></td>
+                  </tr>
+                  <tr>
+                    <td valign="top" width="60"><small><font face="Helvetica, Arial, sans-serif">            $v1 - $v9</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                    </font></small></td>
+                    <td valign="top"><font face="Helvetica, Arial, sans-serif"><small>        the first nine inlets 
+  taken as signals (vectors)</small></font><br>
+                    </td>
+                  </tr>
+                                                                     
+    </tbody>                                        
+  </table>
+              </blockquote>
+              <font face="Helvetica, Arial, sans-serif">The result of <b>expr~</b> 
+         is a vector. The inlet has to be a vector and type conversions are
+  done   either automatically or by the use of <a href="#funcs">functions</a> 
+        .<br>
+              <b><br>
+              </b><br>
+              </font><font face="Helvetica, Arial, sans-serif"><b>Note for
+ MSP   users</b></font><font face="Helvetica, Arial, sans-serif">    : Currently
+   in the MSP version all signal inputs should come first</font><font face="Helvetica, Arial, sans-serif">      followed  by other types of inlet. 
+  (There seems to be no way of mixing   signal   and other  types of inlets 
+  in their order in Max/MSP, if you know   otherwise</font><font face="Helvetica, Arial, sans-serif">      , </font><font face="Helvetica, Arial, sans-serif">    please  let me know.)</font><font face="Helvetica, Arial, sans-serif">   This means that signal inlets cannot 
+  be mixed with  other types of inlets.  For example, "<b>expr~ $v1*$f2*$v3</b> 
+    " is not legal. The  second and third inlet  should be switched </font><font face="Helvetica, Arial, sans-serif"> and "<b>expr~  $v1*$v2*$f3</b>" should 
+   be used.</font><font face="Helvetica, Arial, sans-serif">     </font><br>
+                                       
+<center><br>
+              <img src="exprManual_files/rule01.gif" width="468" height="22">
+              </center>
+              <font face="Helvetica, Arial, sans-serif"><br>
+              </font><font face="Helvetica, Arial, sans-serif"><b>fexpr~</b> 
+   object    provides  a flexible mechanism</font><font face="Helvetica, Arial, sans-serif">      for building FIR and  IIR filters 
+  by evaluating expressions on a sample</font><font face="Helvetica, Arial, sans-serif">      by sample basis and providing access
+to prior samples of the input and</font><font face="Helvetica, Arial, sans-serif">      output audio streams. When fractional 
+  offset is used, fexpr~ uses linear</font><font face="Helvetica, Arial, sans-serif">    interpolation to determine the value 
+  of the indexed sample. <b>fexpr~</b></font><font face="Helvetica, Arial, sans-serif">      evaluates the expression for every 
+  single sample and at every evaluation   previous samples (limited by the 
+ audio vector size) can be accessed. $x is  used to denote a singnal input 
+ whose samples we would like to access. The  syntax is $x followed by the 
+inlet number and indexed by brackets, for example  $x1[-1] specifies the previous
+sample of the first inlet. Therefore, if we  are to build a simple filter
+which replaces every sample by the average  of  that sample and its previous
+one, we would use "<b>fexpr~ ($x1[0]+$x1[-1])/2</b>     ". For ease of when
+the brackets are omitted, the current sample is implied,   so we can right
+the previous filter expression as follows:&nbsp; "</font><font face="Helvetica, Arial, sans-serif"><b>     fexpr~ ($x1+$x1[-1])/2</b>".</font> 
+     To build IIR filters $y is used to  access  the previous samples of the
+  output stream.<br>
+                                       
+<blockquote>                                                  
+  <table border="0" cellpadding="0" cellspacing="0" width="500">
+                  <tbody>
+                    <tr>
+                      <td valign="top" width="80"><small><font face="Helvetica, Arial, sans-serif">            $i1 - $i9</font></small><br>
+                      </td>
+                      <td valign="top"><small><font face="Helvetica, Arial, sans-serif">            the first nine inlets taken 
+  as integers</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                      </font></small></td>
+                    </tr>
+                    <tr>
+                      <td valign="top" width="80"><small><font face="Helvetica, Arial, sans-serif">            $f1 - $f9</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                      </font></small></td>
+                      <td valign="top"><small><font face="Helvetica, Arial, sans-serif">             the first nine inlets taken 
+  as floats</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                      </font></small></td>
+                    </tr>
+                    <tr>
+                      <td valign="top" width="80"><small><font face="Helvetica, Arial, sans-serif">            $s1 - $s9</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                      </font></small></td>
+                      <td valign="top"><small><font face="Helvetica, Arial, sans-serif">            the first nine inlets taken 
+  as symbols (currently symbols are used   for   table  lookups<br>
+                      </font></small></td>
+                    </tr>
+                    <tr>
+                      <td valign="top"><font face="Helvetica, Arial, sans-serif"><small>        $x1[n] -$x9[n]</small></font><font face="Helvetica, Arial, sans-serif"><small></small></font><br>
+                      </td>
+                      <td valign="top"><font face="Helvetica, Arial, sans-serif"><small>    accessing samples of the first
+nine signal inlets (vectors)</small></font>    , <small><font face="Helvetica, Arial, sans-serif">where 0 &lt;= n &lt;  -{vector size</font></small> 
+    }             </td>
+                    </tr>
+                   <tr>
+                     <td valign="top"><small><font face="Helvetica, Arial, sans-serif">    $y[n]</font></small><small><font face="Helvetica, Arial, sans-serif"><br>
+                     </font></small></td>
+                     <td valign="top"><small><font face="Helvetica, Arial, sans-serif">    accessing the output samples where 
+  &nbsp;0 &lt; n &lt; -{vector size}             </font></small><br>
+                     </td>
+                   </tr>
+                                                                        
+     
+    </tbody>                                                  
+  </table>
+                <br>
+                </blockquote>
+                <font face="Helvetica, Arial, sans-serif"><br>
+                </font>                                        
+<hr align="left" size="2" width="100%"><font face="Helvetica, Arial, sans-serif"><a name="ops"></a>       The operators 
+  (listed from highest precedence to lowest) are as follows:</font>      
+                                     
+<blockquote><br>
+                                                                     
+  <table border="0" cellpadding="0" cellspacing="0" width="300">
+                    <tbody>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             ~</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top"><font face="Helvetica, Arial, sans-serif"><small>             One's complement</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             *</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Multiply</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             /</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Divide</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             %</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Modulo</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             +</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Add</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             -</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Substract</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             &lt;&lt;</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Shift Left</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             &gt;&gt;</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Shift Right</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             &lt;</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Less than (boolean)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             &lt;=</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Less than or equal 
+  (boolean)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             &gt;</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Greater than (boolean)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             &gt;=</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Greater than or equal
+(boolean)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             ==</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Equal (boolean)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             !=</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Not equal (boolean)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             &amp;</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Bitwise And</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             ^</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Exclusive Or</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             |</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Bitwise Or</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             &amp;&amp;</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top" width="150"><font face="Helvetica, Arial, sans-serif"><small>             Logical And (boolean)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                      </tr>
+                      <tr>
+                        <td valign="top" width="5"><font face="Helvetica, Arial, sans-serif"><small>             ||</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                        </small></font></td>
+                        <td valign="top"><font face="Helvetica, Arial, sans-serif"><small>             Logical Or (boolean)</small></font><br>
+                        </td>
+                      </tr>
+                                                                        
+                
+    </tbody>                                                            
+  </table>
+                  </blockquote>
+                  <font face="Helvetica, Arial, sans-serif"><br>
+                  </font><font face="Helvetica, Arial, sans-serif"><a name="funcs"></a>      All expr family objects support a variety of functions 
+  as follows:<br>
+                  <br>
+                  </font>                                               
+  
+<blockquote>                                                             
+       
+  <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                      <tbody>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><b>  Functions</b></font><font face="Helvetica, Arial, sans-serif"><br>
+                       </font>                   </td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><b>  # of Args</b></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><b>   Description</b></font><font face="Helvetica, Arial, sans-serif"><br>
+                       </font>                   </td>
+                        </tr>
+                        <tr>
+                          <td valign="top"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font>                   </td>
+                          <td valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font>                   </td>
+                          <td valign="top"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font>                   </td>
+                        </tr>
+                              <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">if()<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">3<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">conditional &nbsp;- if (condition, IfT 
+  rue-expr, IfFalse-expr) - in expr~ if 'condition' is a signal, the result 
+  will be determined on sample by sample basis (added in version 0.4)</font></small><br>
+             </td>
+                        </tr>
+        <tr>
+                          <td valign="top"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font>                   </td>
+                          <td valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font>                   </td>
+                          <td valign="top"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font>                   </td>
+                        </tr>
+       <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  int</small></font><font face="Helvetica, Arial, sans-serif"><small>  ()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  convert to integer</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  rint</small></font><font face="Helvetica, Arial, sans-serif"><small>   ()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  round a float to  a nearby integer</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  float</small></font><font face="Helvetica, Arial, sans-serif"><small>   ()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  convert to float</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  min</small></font><font face="Helvetica, Arial, sans-serif"><small>  ()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  2</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  minumum</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  max</small></font><font face="Helvetica, Arial, sans-serif"><small>  ()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  2</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  maximum</small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small><font>  abs()</font></small></font><font face="Helvetica, Arial, sans-serif"><small><font><br>
+                       </font></small></font><font face="Helvetica, Arial, sans-serif"><small>                     </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small><font>  1</font></small></font><font face="Helvetica, Arial, sans-serif"><small><font><br>
+                       </font></small></font><font face="Helvetica, Arial, sans-serif"><small>                     </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small><font>  absolute value</font></small></font> 
+     <small><font face="Helvetica, Arial, sans-serif">(added in version 0.3)</font></small> 
+                     </td>
+                        </tr>
+           <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">if()<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">3<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">conditional &nbsp;- if (condition, IfT 
+  rue-expr, IfFalse-expr) - in expr~ if 'condition' is a signal, the result 
+  will be determined on sample by sample basis (added in version 0.4)</font></small><br>
+             </td>
+           </tr>
+            <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">isinf()<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif"> is the value infinite  (added in version 
+ 0.4)</font></small><br>
+             </td>
+           </tr>
+            <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">finite()<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif"> is the value finite (added in version 
+ 0.4)</font></small><br>
+             </td>
+           </tr>
+            <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">isnan<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">is the value non a number (added in version
+0.4)</font></small><br>
+             </td>
+           </tr>
+            <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">copysign()<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1<small><br>
+           </small>          </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">copy sign of a number</font><font face="Helvetica, Arial, sans-serif">(added in version 0.4)</font></small><br>
+             </td>
+           </tr>
+            <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">imodf<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1</font></small></td>
+           <td valign="top"><small><font face="Helvetica, Arial, sans-serif"> get signed intergar value from floating 
+ point number(added in version 0.4)</font></small><br>
+             </td>
+           </tr>
+            <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">modf<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">get signed fractional value from floating-point 
+ number(added in version 0.4)</font></small><br>
+             </td>
+           </tr>
+            <tr>
+             <td align="left" valign="top"><small><font face="Helvetica, Arial, sans-serif">drem<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">2<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">floating-point remainder function (added 
+ in versio</font></small><small><font face="Helvetica, Arial, sans-serif">  n 0.4)</font></small><br>
+             </td>
+           </tr>
+           <tr>
+                       <td valign="top"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font></td>
+                       <td valign="top"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font></td>
+                       <td valign="top"><font face="Helvetica, Arial, sans-serif"><br>
+                       </font></td>
+                     </tr>
+                     <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><b><small>  power functions</small></b></font><font face="Helvetica, Arial, sans-serif"><b><small><br>
+                          </small></b></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  pow</small></font><font face="Helvetica, Arial, sans-serif"><small>  ()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  2</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  raise to the power  of {e.g., 
+  pow(x,y) is x to the power of y}</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  sqrt</small></font><font face="Helvetica, Arial, sans-serif"><small>   ()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  square root</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  exp()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  e raised to the  power  of the
+argument {e.g., exp(5.2) is e raised to the  power of 5.2}</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  ln() and log()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  natural log</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  log10()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  log base 10</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  fact()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  factorial</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                         <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  erf()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  error function (added in version
+ 0.4)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                         <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  erfc()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  complementary error function 
+(added in version 0.4)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                         <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  cbrt()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  cube root (added in version 
+0.4)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                         <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  expm1()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  exponential minus 1 (added
+in version 0.4)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                         <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  log1p()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  logarithm of 1 plus (added
+in version 0.4)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                         <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  ldexp()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  multiply floating-point number
+ by integral power of 2 (added in version 0.4)</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small><b>  Trigonometric</b></small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  sin()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  sine</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  cos()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  cosine</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  tan()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  tangent</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  asin()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  arc sine</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  acos()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  arc cosine</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  atan()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  arc tangent</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  atan2()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  2</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  arc tangent of 2  variables</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  sinh()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  hyperbolic sine</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  cosh()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  hyperbolic cosine</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  tanh()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  hyperbolic</small></font><font face="Helvetica, Arial, sans-serif"><small>        tangent</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  asinh()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  inverse hyperbolic</small></font><font face="Helvetica, Arial, sans-serif"><small>        sine</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  acosh()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  inverse hyperbolic</small></font><font face="Helvetica, Arial, sans-serif"><small>       cosine</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  atan()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  inverse hyperbolic</small></font><font face="Helvetica, Arial, sans-serif"><small>       tangent</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">floor()<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">largest integral value not greater than 
+  argument (added in version 0.4)<br>
+             </font></small></td>
+           </tr>
+           <tr>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">ceil()<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">smallest integral value not less than 
+  argument (added in version 0.4)<br>
+             </font></small></td>
+           </tr>
+           <tr>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">fmod()<br>
+             </font></small></td>
+             <td align="center" valign="top"><small><font face="Helvetica, Arial, sans-serif">1<br>
+             </font></small></td>
+             <td valign="top"><small><font face="Helvetica, Arial, sans-serif">&nbsp;floating-point remainder function 
+   (added in version 0.4)</font></small><br>
+             </td>
+           </tr>
+           <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small><b>  Table Functions</b></small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  size()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  size of a table</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  sum()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  1</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  sum of all elements   of a table</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                        </tr>
+                        <tr>
+                          <td valign="middle" width="70"><font face="Helvetica, Arial, sans-serif"><small>  Sum()</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="center" valign="top" width="50"><font face="Helvetica, Arial, sans-serif"><small>  3</small></font><font face="Helvetica, Arial, sans-serif"><small><br>
+                          </small></font></td>
+                          <td align="left" valign="middle"><font face="Helvetica, Arial, sans-serif"><small>  sum of elemnets  of a specified 
+  boundary of a table</small></font><br>
+                          </td>
+                        </tr>
+           <tr>
+             <td valign="top"><br>
+             </td>
+             <td valign="top"><br>
+             </td>
+             <td valign="top"><br>
+             </td>
+           </tr>
+                                                                        
+                                                             
+    </tbody>                                                             
+       
+  </table>
+                    <br>
+                    </blockquote>
+                    <font face="Helvetica, Arial, sans-serif"><br>
+                    </font><br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                                                                     <br>
+</body></html>

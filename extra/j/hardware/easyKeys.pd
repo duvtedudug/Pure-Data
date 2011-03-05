@@ -1,0 +1,189 @@
+#N canvas 62 8 962 703 12;
+#X obj 10 8 notein;
+#X obj 10 483 j/musical/mapNote;
+#X obj 836 202 cnv 15 83 15 empty \$0-scaleGui Major 2 8 1 14 -1 -228856
+0;
+#X obj 83 250 loadbang;
+#X obj 819 202 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 819 151 cnv 15 100 15 empty \$0-IGui empty 70 8 1 14 -228856
+-128992 0;
+#X msg 83 272 C C_sharp D D_sharp E F F_sharp G G_sharp A A_sharp B
+;
+#X obj 47 80 stripnote;
+#X obj 47 102 mod 12;
+#X obj 84 202 == 1;
+#X obj 819 168 tgl 15 0 empty empty empty 17 7 0 10 -262144 -1 -1 0
+1;
+#X obj 10 671 noteout;
+#X obj 10 527 unpack f f f;
+#X obj 802 151 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 836 168 cnv 15 83 15 empty \$0-rootNoteGui C 2 8 1 14 -1 -228856
+0;
+#X obj 819 185 cnv 15 100 15 empty \$0-IIGui empty 70 8 1 14 -228856
+-128992 0;
+#X obj 802 185 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 819 219 cnv 15 100 15 empty \$0-IIIGui empty 70 8 1 14 -228856
+-128992 0;
+#X obj 802 219 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 819 287 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 819 236 cnv 15 100 15 empty \$0-IVGui empty 70 8 1 14 -228856
+-128992 0;
+#X obj 802 236 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 836 253 cnv 15 83 15 empty \$0-notesChordsGui _ 2 8 1 14 -1
+-228856 0;
+#X obj 819 270 cnv 15 100 15 empty \$0-VGui empty 70 8 1 14 -228856
+-128992 0;
+#X obj 802 270 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 819 304 cnv 15 100 15 empty \$0-VIGui empty 70 8 1 14 -228856
+-128992 0;
+#X obj 802 304 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 819 338 cnv 15 100 15 empty \$0-VIIGui empty 70 8 1 14 -228856
+-128992 0;
+#X obj 802 338 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 836 287 cnv 15 83 15 empty empty empty 2 8 1 14 -99865 -228856
+0;
+#X obj 836 321 cnv 15 83 15 empty empty empty 2 8 1 14 -99865 -228856
+0;
+#X obj 819 253 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 819 321 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144
+-1 -1;
+#X obj 556 55 sel 0 1 2 3 4 5 6 7 8 9 10 11;
+#X obj 322 646 ctlin;
+#X obj 322 671 ctlout;
+#X text 615 598 j/hardware/easyKeys \; \; Be the one finger Piano player
+\; you always wanted to be!;
+#X obj 10 33 pack f f f;
+#X obj 109 591 j/scale/quadratic;
+#X obj 805 355 hsl 113 15 1 0.1 1 1 empty empty Velocity_Curve -2 7
+1 10 -257985 -1 -1 5393 1;
+#X obj 802 102 cnv 15 118 15 empty empty j/hardware/easyKeys 2 8 1
+11 -257985 -1 0;
+#X obj 109 569 j/scale/lin 0 127 0 1;
+#X obj 109 613 j/scale/lin 0 1 0 127;
+#X obj 467 340 loadbang;
+#X obj 10 55 t a a;
+#X obj 711 487 loadbang;
+#X msg 711 509 _ Triads;
+#X obj 10 421 j/musical/triads;
+#X msg 467 362 Major Minor;
+#X obj 802 119 cnv 30 117 30 empty \$0-chordGui I 5 16 1 28 -257985
+-99865 0;
+#N canvas 0 0 602 166 romanNumeralChordGui 0;
+#X obj -22 4 inlet;
+#X obj 239 4 inlet;
+#X obj 239 29 sel 0 1;
+#X msg 239 53 I I ii ii iii IV IV V V vi vi vii';
+#X floatatom 70 79 5 0 0 0 - - -;
+#X msg 265 77 i i ii' ii' III iv iv v v VI VI VII;
+#X obj 373 1 loadbang;
+#X msg 373 26 0;
+#X obj -22 125 j/convert/numbers2symbols \$0-chordGui;
+#X connect 0 0 8 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 2 1 5 0;
+#X connect 3 0 8 1;
+#X connect 5 0 8 1;
+#X connect 6 0 7 0;
+#X connect 7 0 2 0;
+#X connect 8 0 4 0;
+#X restore 301 162 pd romanNumeralChordGui;
+#X obj 361 362 j/count/up 1;
+#X obj 361 384 j/convert/numbers2symbols \$0-scaleGui;
+#X obj 47 125 t f f f;
+#X obj 47 179 t f f;
+#X floatatom 138 180 5 0 0 0 - - -;
+#X obj 605 509 j/count/up 1;
+#X obj 47 297 j/convert/numbers2symbols \$0-rootNoteGui;
+#X obj 605 531 j/convert/numbers2symbols \$0-notesChordsGui;
+#N canvas 0 0 580 300 spigotOnly2nd 0;
+#X obj 27 200 spigot;
+#X msg 159 167 0;
+#X obj 82 98 t f b;
+#X obj 82 123 f;
+#X obj 27 225 t b f;
+#X obj 27 22 inlet;
+#X obj 82 23 inlet;
+#X obj 64 270 outlet;
+#X text 131 101 <-ignore first \; new value;
+#X text 274 271 latch on/off-0/1;
+#X obj 219 270 outlet;
+#X text 312 37 spigotOnly2nd \; \; Like spigot but resets to \; closed
+after the 2nd new \; value passes through. \; \; Use for 'sticky shift
+key' \; style functions with a MIDI \; keyboard.;
+#X connect 0 0 4 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 1;
+#X connect 2 0 10 0;
+#X connect 2 1 3 0;
+#X connect 3 0 0 1;
+#X connect 4 0 1 0;
+#X connect 4 1 7 0;
+#X connect 5 0 0 0;
+#X connect 6 0 2 0;
+#X restore 47 226 pd spigotOnly2nd;
+#X connect 0 0 37 0;
+#X connect 0 1 37 1;
+#X connect 0 2 37 2;
+#X connect 1 0 12 0;
+#X connect 3 0 6 0;
+#X connect 4 0 51 0;
+#X connect 6 0 57 1;
+#X connect 7 0 8 0;
+#X connect 8 0 53 0;
+#X connect 9 0 59 1;
+#X connect 12 0 11 0;
+#X connect 12 1 41 0;
+#X connect 12 2 11 2;
+#X connect 31 0 56 0;
+#X connect 33 0 13 0;
+#X connect 33 2 16 0;
+#X connect 33 3 4 0;
+#X connect 33 4 18 0;
+#X connect 33 5 21 0;
+#X connect 33 6 31 0;
+#X connect 33 7 24 0;
+#X connect 33 8 19 0;
+#X connect 33 9 26 0;
+#X connect 33 10 32 0;
+#X connect 33 11 28 0;
+#X connect 34 0 35 0;
+#X connect 34 1 35 1;
+#X connect 34 2 35 2;
+#X connect 37 0 44 0;
+#X connect 38 0 42 0;
+#X connect 39 0 38 1;
+#X connect 41 0 38 0;
+#X connect 42 0 11 1;
+#X connect 43 0 48 0;
+#X connect 44 0 47 0;
+#X connect 44 1 7 0;
+#X connect 45 0 46 0;
+#X connect 46 0 58 1;
+#X connect 47 0 1 0;
+#X connect 48 0 52 1;
+#X connect 51 0 52 0;
+#X connect 52 0 1 2;
+#X connect 52 0 50 1;
+#X connect 53 0 54 0;
+#X connect 53 0 55 0;
+#X connect 53 1 50 0;
+#X connect 53 2 33 0;
+#X connect 54 0 59 0;
+#X connect 54 1 9 0;
+#X connect 56 0 58 0;
+#X connect 57 0 1 1;
+#X connect 58 0 47 1;
+#X connect 59 0 57 0;
+#X connect 59 1 10 0;
+#X coords 0 -1 1 1 121 272 2 800 100;
