@@ -15,7 +15,7 @@
 #include <sys/stat.h>
 #include <sys/wait.h>
 
-#ifdef NT
+#ifdef _MSC_VER
 #pragma warning (disable: 4305 4244)
 #endif
 
@@ -47,7 +47,7 @@ char *class_gethelpdir(t_class *c);
 
 #endif
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__FreeBSD_kernel__) || defined(__GNU__)
 #ifdef __x86_64__
 static char pd_tilde_dllextent[] = ".l_ia64",
     pd_tilde_dllextent2[] = ".pd_linux";
@@ -59,6 +59,9 @@ static char pd_tilde_dllextent[] = ".l_i386",
 #ifdef __APPLE__
 static char pd_tilde_dllextent[] = ".d_fat",
     pd_tilde_dllextent2[] = ".pd_darwin";
+#endif
+#if defined(_WIN32) || defined(__CYGWIN__)
+static char pd_tilde_dllextent[] = ".m_i386", pd_tilde_dllextent2[] = ".dll";
 #endif
 
 /* ------------------------ pd_tilde~ ----------------------------- */
@@ -512,7 +515,7 @@ static void *pd_tilde_new(t_symbol *s, int argc, t_atom *argv)
     int ninsig = 2, noutsig = 2, j, fifo = 5;
     float sr = sys_getsr();
     t_sample **g;
-    t_symbol *pddir = sys_guidir,
+    t_symbol *pddir = sys_libdir,
         *scheddir = gensym(class_gethelpdir(pd_tilde_class));
     /* fprintf(stderr, "pd %s, sched %s\n", pddir->s_name, scheddir->s_name); */
     while (argc > 0)

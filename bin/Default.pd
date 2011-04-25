@@ -1,2 +1,2 @@
-#N canvas 156 415 131 284 12;
-#X obj 4 4 j/hardware/easyKeys;
+#N canvas 153 419 144 319 12;
+#X obj 3 3 jf/hardware/easy-keys;
