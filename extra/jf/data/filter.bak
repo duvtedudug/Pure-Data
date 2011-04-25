@@ -1,0 +1,34 @@
+#N canvas 208 151 652 550 10;
+#X obj 31 23 inlet;
+#X obj 234 31 inlet;
+#X obj 235 194 outlet;
+#X text 231 97 boolean \; operation \; goes \; here;
+#X obj 31 356 list;
+#X obj 31 394 outlet;
+#X obj 31 135 t a a b;
+#X obj 160 264 sel 1;
+#X obj 31 375 list trim;
+#X obj 166 60 route set;
+#X msg 166 79 set \$1;
+#X text 361 57 Outputs field values for which the \; operation cross-connected
+to \; the rightmost in/outlet is true. \; \; The operation tests the
+field \; specified in argument \$3. If the \; result is true then this
+field and \; any adjacent value fields of that \; scalar instance specified
+in \$4-> \; are output also. \; \; \$1-Struct type name \; \$2-Target
+data subpatch name \; \$3-Name of the test field \; \$4 \, \$5 \, ...-Adjacent
+value fields \; \; Use drip1 \, 2 \, .. to output 1 \, 2 \, .. fields
+\; \; Use a [set xxxx( message to change \; target data subpatch (\$2)
+\; \; J F \; \; (idea from [list-filter]);
+#X obj 31 99 j/data/drip \$1 \$2 \$3;
+#X connect 0 0 12 0;
+#X connect 1 0 9 0;
+#X connect 4 0 8 0;
+#X connect 6 0 2 0;
+#X connect 6 1 4 1;
+#X connect 6 2 4 1;
+#X connect 7 0 4 0;
+#X connect 8 0 5 0;
+#X connect 9 0 10 0;
+#X connect 9 1 7 0;
+#X connect 10 0 12 1;
+#X connect 12 0 6 0;

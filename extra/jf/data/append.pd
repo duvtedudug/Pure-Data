@@ -1,0 +1,33 @@
+#N canvas 495 84 763 346 10;
+#X obj 213 237 pointer;
+#X obj 124 129 t s s;
+#X msg 151 152 \; pd-\$1 clear;
+#X msg 213 216 traverse pd-\$1 \, bang;
+#X obj 16 9 inlet;
+#X obj 180 8 inlet;
+#X obj 124 108 symbol \$2;
+#X obj 180 52 symbol;
+#X text 217 9 bang to reset;
+#X obj 275 112 symbol \$2;
+#X obj 180 33 route set clear;
+#X text 411 41 Append scalar of a particular struct template \; to
+destination subpatch \; \; \$1-Struct type name \; \$2-Destination
+subpatch name \; \$3 \, \$4 \, ..-Fields to clone \; \; Use append
+\, append2 \, .. to address structures \; with 1 \, 2 \, .. fields
+\; \; Use a [set xxxx( message to change \; target data subpatch (\$2)
+\; [clear( message clears data subpatch window \; [bang( message resets
+pointer to head \; \; J F \;;
+#X obj 88 279 append \$1 \$3;
+#X connect 0 0 12 1;
+#X connect 1 0 3 0;
+#X connect 1 1 2 0;
+#X connect 3 0 0 0;
+#X connect 4 0 12 0;
+#X connect 5 0 10 0;
+#X connect 6 0 1 0;
+#X connect 7 0 6 1;
+#X connect 7 0 9 1;
+#X connect 9 0 3 0;
+#X connect 10 0 7 0;
+#X connect 10 1 6 0;
+#X connect 10 2 9 0;

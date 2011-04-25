@@ -1,0 +1,26 @@
+#N canvas 180 277 623 329 10;
+#X obj 213 197 pointer;
+#X obj 213 115 t s s;
+#X obj 16 39 t b b;
+#X obj 213 94 symbol \$3;
+#X msg 240 138 \; pd-\$1 clear;
+#X msg 213 176 traverse pd-\$1 \, bang;
+#X obj 16 9 inlet;
+#X obj 224 8 inlet;
+#X text 357 31 Clone a data structure subpatch \; of a certain type
+\; \; \$1-Struct type name \; \$2-Source subpatch name \; \$3-Destination
+subpatch name \; \$4 \, \$5 \, ...-Fields to clone \; \; Use drip1
+\, 2 \, .. to output 1 \, 2 \, .. fields \; \; Use a [set xxxx( message
+to change \; target data subpatch (\$2) \; \; J F \;;
+#X obj 16 113 jf/data/drip \$1 \$2 \$4 \$5;
+#X obj 88 279 append \$1 \$4;
+#X connect 0 0 10 1;
+#X connect 1 0 5 0;
+#X connect 1 1 4 0;
+#X connect 2 0 9 0;
+#X connect 2 1 3 0;
+#X connect 3 0 1 0;
+#X connect 5 0 0 0;
+#X connect 6 0 2 0;
+#X connect 7 0 9 1;
+#X connect 9 0 10 0;

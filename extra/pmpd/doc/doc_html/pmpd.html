@@ -1,0 +1,3437 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=windows-1252">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 1.1.0  (Win32)">
+	<META NAME="AUTHOR" CONTENT="cyrille">
+	<META NAME="CREATED" CONTENT="20040124;14072400">
+	<META NAME="CHANGEDBY" CONTENT="cyrille">
+	<META NAME="CHANGED" CONTENT="20040301;21283021">
+	<META NAME="SDFOOTNOTE" CONTENT=";;;;P">
+	<STYLE>
+	<!--
+		@page { size: 21cm 29.7cm; margin: 2cm }
+		P { margin-bottom: 0.21cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-GB" DIR="LTR">
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><FONT SIZE=6 STYLE="font-size: 28pt"><B>pmpd</B></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><FONT SIZE=6 STYLE="font-size: 28pt"><B>Physical
+Modelling for pd</B></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">Cyrille Henry</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">(cyrille.henry@la-kitchen.fr)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=5 STYLE="font-size: 20pt">Abstract</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><I>	<SPAN LANG="fr-FR">pmpd</SPAN>
+is a collection of object for pd.  These objects provide real-time 
+simulations, <SPAN LANG="en-GB">specially</SPAN> physical behaviors.
+pmpd can be used to create natural dynamic systems, like a bouncing
+ball, string movement, Brownian movement, chaos,  fluid dynamics,
+sand, gravitation, and more. It can also be used to create
+displacements  thus <SPAN LANG="en-GB">allowing</SPAN> a completely
+dynamic approach of pd computing.</I></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><I>With pmpd physical
+dynamics can be modelled without knowing the global equation of the
+movement. Only the cause of the movement and the involved structure
+are needed for the simulation. pmpd provides the basic objects for
+this kind of simulation. Assembling them allows the creation of a
+very large variety of dynamic systems .</I></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><I>These object are
+designed to be used with pd (pd). pd is a real time graphical
+programming environment dedicated for audio signal processing. Pd
+allow the creation of object and it is well adapted of the creation
+of particular physical modelling. GEM is a pd library dedicated to
+images processing [14]. In the provided pmpd examples, GEM is used
+for the movement visualisation.</I></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=5 STYLE="font-size: 20pt">State
+of the art </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Physical modelling is wildly used in
+audio/video synthesis. Physical modelling can be used to not only
+modelled real world sounds [4], it can also produce sound that are
+not found in nature (i.e. string out of glass etc..)</P>
+<P STYLE="margin-bottom: 0cm">pmpd is an approach to models made of
+particles, which are only one of many possible dynamics system [7].</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">TAO synth is a software [3] dedicated
+to particular physical modelling for audio synthesis. It is not
+dedicated for real time use. TAO allow a wild range of excitations
+and resonant structures.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Cordis Anima is a particular physical
+modelling environment for comportment synthesis (with both audio and
+video). [9]</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">A common limitation is that personal
+computers do not allow rapid real time simulation for complex
+particular models.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">pd is a real time programming
+environment for audio and video synthesis [2]. Moreover:</P>
+<P STYLE="margin-bottom: 0cm">	-it is a free software. 
+</P>
+<P STYLE="margin-bottom: 0cm">	-it can be used on most personal
+computer and operating system</P>
+<P STYLE="margin-bottom: 0cm">	-the object oriented paradigm of pd is
+well adapted to such simulations</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>Since Max/MSP is very
+similar to pd (except for first point above!), the pmpd objects
+objects can be ported to Max/MSP, and used like the originals.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Some pd object already provide physical
+modelling, namely for audio synthesis [11] [10]<SPAN STYLE="background: transparent">.
+Since these objects do not aim to solve general physical modelling
+problems and often function at the audio rate, they are not well
+adapted to dynamic simulations.</SPAN></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>On the other hand, some pd
+object provide high level comportment, like various chaos objects
+[6]. This kind of object can not really be modified or adapted to
+create more deterministic behavior.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>pmpd provide a very
+flexible way to particle physical modelling simulation and other kind
+of comportment based model [8]. Using pmpd with pd programming
+environment allow real time interactions with this simulation.  [5] </FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>All
+of the pmpd objects work with control data (as opposed to audio
+signals).  This means that they do not generate audio directly. 
+However, they can easily be used to <I>control</I> audio engines, 
+i.e.: you can not hear the sound of a vibrating string because it
+will not move enough fast; but you can use the movement of this
+particles along a string to perform additive synthesis. </FONT>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>This
+is the primary limitation of pmpd, dynamic modelling requires too
+much CPU to be performed at audio rates. It can only be used to
+generate comportments.</FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>pmpd
+can be download here:</FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3><A HREF="http://drpichon.free.fr/pmpd/download/">http://drpichon.free.fr/pmpd/download/</A></FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=5 STYLE="font-size: 20pt">Introduction</FONT></P>
+<P STYLE="margin-bottom: 0cm">	<FONT SIZE=4 STYLE="font-size: 16pt">natural
+comportment</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">The aim of pmpd is to create different
+kinds of behavior for sound  and video processing using pd. Moreover,
+the modelling of dynamic physical systems can easily be done with
+pmpd. 
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_5ccb76a4.png" NAME="Image1" ALIGN=LEFT WIDTH=642 HEIGHT=185 BORDER=0><BR CLEAR=LEFT><B>Figure
+1</B>: <FONT SIZE=2>transition using &ldquo;line&rdquo; object or
+pmpd objects.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Figure 1 shows two different kind of a
+parameter transitions. The first transition is made with a native pd
+object: &ldquo;line&rdquo; which can go to a value in a given amount
+of time. The second is made using pmpd objects.</P>
+<P STYLE="margin-bottom: 0cm">The transition made with pmpd shows a
+more&mdash;so to say&mdash;&ldquo;natural&rdquo; evolution than the
+first one. It shows an acceleration and a deceleration time. The
+shape of the transition can be changed using physical values. This
+idea can also be used in audio synthesis, where one may desire the
+sound to be modulated in a &ldquo;natural&rdquo; way. pmpd is just
+providing an easy way in pd to generate this <SPAN LANG="en-GB">behavior.</SPAN></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">The pmpd objects can also be used for
+more complex simulation, in a 1, 2 or 3 dimensions space. For
+instance, simulations of gas, paste, and sand can be made in real
+time on common personal computers.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">	<SPAN LANG="en-GB">Examples</SPAN><FONT SIZE=4 STYLE="font-size: 16pt">:</FONT></P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_m3439fbfe.png" NAME="Image4" ALIGN=LEFT WIDTH=312 HEIGHT=298 BORDER=0><BR CLEAR=LEFT><IMG SRC="pmpd_html_m1c500c22.png" NAME="Image3" ALIGN=LEFT WIDTH=317 HEIGHT=296 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>a) smalls particle falling
+on a 3D object	b) 3D membrane</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_m79d89d55.png" NAME="Image2" ALIGN=LEFT WIDTH=321 HEIGHT=299 BORDER=0><BR CLEAR=LEFT><IMG SRC="pmpd_html_5b9565b7.png" NAME="Image5" ALIGN=LEFT WIDTH=309 HEIGHT=299 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=2>c) 2D fluid motion: vortex
+on a non viscus fluid		d) 2D structure interacting with a &ldquo;wall&rdquo;</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><B>Figure 2: </B><SPAN STYLE="font-weight: medium">Di</SPAN><FONT SIZE=2>fferent
+simulation using pmpd with pd and GEM</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm">Figure 2 shows four
+different kinds of simulation using pmpd. 
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm">a) A few hundred small
+particle falling on a distorted sphere (3D simulation).</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm">b) A small 3D membrane
+composed by a set of spherical masses and links between the masses.
+This structure is linked to a non moving referential. Forces can be
+appled to one or more masses. The structure can move in the same way
+as a square elastic membrane.</P>
+<OL TYPE=i START=100>
+	<LI><P ALIGN=LEFT STYLE="margin-bottom: 0cm">A 2D fluid dynamics
+	simulation: pmpd is used to display some fluid particles in motion.</P>
+</OL>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm">The motion and rebounding of
+a &ldquo;ball&rdquo; is modelled in 2D with 9 masses.  
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm">You can find the patch used
+for the generation of these pictures in the pmpd examples files.</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4 STYLE="font-size: 16pt">	Real-time
+simulation</FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal">To allow
+real time interaction, &ldquo;Mass&rdquo; objects accept force and
+displacement messages from the user. pd can then be use to provide
+automation or interaction between the user and the simulation. The
+extreme modularity of pd can offer a very large variety of
+interaction with the simulation.</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=5 STYLE="font-size: 20pt">Bases</FONT></P>
+<P STYLE="margin-bottom: 0cm">This library is designed to provide
+hight level objects (each pmpd object can be made as pd abstraction).
+These objects are low level comportment objects.  Assembling these
+objects can generate complex behavior due to the interaction of the
+basic objects.</P>
+<P STYLE="margin-bottom: 0cm">pmpd implements the basic objects thus
+allowing particle-base physical modelling.</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal">Very
+complex <SPAN LANG="en-GB">behaviors</SPAN> can be simulated without
+knowing the global equation of the movement. Only the cause of the
+movement and the evolved structure are needed for the simulation.
+pmpd can then easily be used for the simulation of a very large
+variety of comportment.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Complex simulations are basically made
+using two kind of elementary objects: &ldquo;mass&rdquo; and &ldquo;link&rdquo;.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4 STYLE="font-size: 16pt">	Mass
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm">&ldquo;mass&rdquo; objects react like a
+piont mass. It takes forces at its input, and output its position. It
+move according to the Newtonian dynamics: 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">&sum;<FONT SIZE=4>F = m <FONT FACE="Times New Roman, serif">&gamma;</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">&ldquo;mass&rdquo; objects got inertia,
+but they are punctual (they can not rotate).</P>
+<P STYLE="margin-bottom: 0cm">For each time iteration, they make the
+summation of forces apply to their inlet to know the acceleration to
+have (positive or negative).</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4 STYLE="font-size: 16pt">	Link
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm">&ldquo;link&rdquo; objects take two
+mass positions and output two opposite forces depending on the
+relative position and speed of the masses.</P>
+<P STYLE="margin-bottom: 0cm">Links are visco-elastic connections
+between two masses, we will see other kind of link later.</P>
+<P STYLE="margin-bottom: 0cm">Hook's law describes the elasticity:</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4><SPAN STYLE="background: transparent">F
+= K X</SPAN></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal">where K is the
+rigidity and X is the elongation of the link.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Viscosity is modelled with: 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT COLOR="#000000"><FONT SIZE=4><SPAN STYLE="background: transparent">F
+= D V</SPAN></FONT></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm">where D is the damping of
+the link and V is the relative speed of two masses.</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">The force generated by a visco-elastic
+link is the sum of these two forces.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4><SPAN STYLE="background: transparent">F
+= K X + <FONT COLOR="#000000"> D V</FONT></SPAN></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_m58415959.png" NAME="Image22" ALIGN=LEFT WIDTH=320 HEIGHT=263 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><SPAN STYLE="font-style: normal"><B><FONT SIZE=3>Figure
+3: </FONT></B><FONT SIZE=2>overview of a link</FONT></SPAN></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt">	Units</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>pmpd does not use specific
+units, you can chose your own. However, you should try to use units
+you that are consistent.  i.e: you chose inches for the distance
+unit, then rigidity unit should be force unit divide by inches. 
+<SPAN STYLE="font-style: normal">Things are relative: a mass
+weighting 10 will react the same way to a force of 1 than a mass of
+100 to a force of 10.</SPAN></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4 STYLE="font-size: 16pt">	Metronome</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>A time
+reference is needed to compute the simulation. pmpd uses an
+&ldquo;external&rdquo; scheduler.; the user has to send a scheduler
+event to pmpd object.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>This
+mechanism was chosen purposefully.  The desired advantages were: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>	-You
+can easily change the speed of the simulation (adjust on the CPU
+speed).</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>	-You
+can stop different parts of the simulation when you do not need them.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>	-You
+can synchronise to video rendering if desired.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>	-pmpd
+needs to compute all mass movement together and all link interaction
+together.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>		An
+external metronome is well adapted to this task.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>The
+speed of the metronome should depend of the speed of the movement you
+want to simulate. There is no general law to know the metronome
+speed, but: the faster the metro, the faster the simulation can be.
+The metronome should be faster than the highest frequency of the
+movement you want to simulate.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>The
+metronome corresponds with the time discretization of the equations.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>States
+of the model are computeed in discreet time. i.e. displacement of a
+mass is not a function, but a finite serial of point: X(n).</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>Velocity
+at time = t: V(t) is define by: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4><U>X(t)
+&ndash; X(t-1)</U></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4>dT</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3><SPAN STYLE="background: transparent">dT
+is the small time delta between two consecutive iterations.</SPAN></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>Similarly,
+acceleration at time t is define by: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4><U>V(t)
+&ndash; V(t-1)</U></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4>dT</FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>So
+Acceleration (<FONT SIZE=4><FONT FACE="Times New Roman, serif">&gamma;
+) </FONT></FONT>is:</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4><U>X(t-2)
+&ndash; 2X(t-1) + X(t)</U></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4>dT<SUP>2</SUP>
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>including
+equation: <FONT SIZE=4><FONT FACE="Times New Roman, serif">&sum;</FONT>F
+= m <FONT FACE="Times New Roman, serif">&gamma; </FONT></FONT><FONT FACE="Times New Roman, serif">gives:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT FACE="Times New Roman, serif"><FONT SIZE=3><FONT SIZE=4><SPAN STYLE="text-decoration: none">X(t)
+= </SPAN>&sum;F * C &ndash; <SPAN STYLE="text-decoration: none">X(t-2)
++ 2X(t-1)</SPAN></FONT></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=3>where the constant C
+is given by:  </FONT></FONT>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal; text-decoration: none">
+<FONT FACE="Times New Roman, serif"><FONT SIZE=4>C = <U>dT<SUP>2</SUP></U></FONT></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal; text-decoration: none">
+      <FONT FACE="Times New Roman, serif"><FONT SIZE=4>m</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><SPAN STYLE="font-style: normal"><SPAN STYLE="text-decoration: none"><FONT FACE="Times New Roman, serif"><FONT SIZE=3>pmpd
+gives a default value of 1 to </FONT><FONT SIZE=4>dT<SUP>2 </SUP></FONT></FONT></SPAN><FONT SIZE=3>.</FONT></SPAN></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>This
+shows how to compute the current position of a mass while knowing the
+force applied to it and its last two positions.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4>	<FONT SIZE=4 STYLE="font-size: 16pt">Name</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>For
+patching simplification mass and link objects have a name. It is the
+first argument for the object creation. It is used to receive
+information (pd messages). All masses with the same name defined a
+class of mass. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3><I>			</I></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><IMG SRC="pmpd_html_m3ec42072.png" NAME="Image7" ALIGN=LEFT WIDTH=642 HEIGHT=263 BORDER=0><BR CLEAR=LEFT><FONT SIZE=3><B>figure
+4:</B> <FONT SIZE=2>sending bang without connection</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>Figure
+4 shows how &ldquo;bang&rdquo; massages are pass to a set of masses
+and linsk without creating pd connection.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>It can
+save patching time, and should be used for patch simplification.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4 STYLE="font-size: 16pt">	Interactors
+objects</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>Interactor
+objects act as link object but provide patching facility.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>In
+effect, a single object can create an interaction with a entire class
+of masses.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>Interactor
+objects should be created with a name. This name is the name of the
+masses it is connected to.</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_6995d216.png" NAME="Image6" ALIGN=LEFT WIDTH=599 HEIGHT=215 BORDER=0><BR CLEAR=LEFT><FONT SIZE=3><I><B>Figure
+5:</B> <FONT SIZE=2>sending forces to a class of mass</FONT></I></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>In
+Figure 5, all masses are subject to an ambient constant force. This
+force can viewed as gravity force applied to every mass named &ldquo;foo&rdquo;.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>Masses
+with other name will not be sensitive to this interactor. Different
+interactor objects provide interactions with a point, a line and
+other simple primitives.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4 STYLE="font-size: 16pt">	Test
+objects</FONT></P>
+<P STYLE="margin-bottom: 0cm"><SPAN STYLE="font-style: normal"><FONT SIZE=3>The
+objects test the position&mdash;as well as distance, speed from a
+point, a line, orientation...&mdash;of a mass</FONT></SPAN>. 
+Thereby, <SPAN STYLE="font-style: normal"><FONT SIZE=3>pd has access
+to much informations regarding the state of the system.  This allows
+interaction with the rest of the patch.  Another test object gives
+information about the link (deformation, speed of deformation,
+orientation...)</FONT></SPAN></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><IMG SRC="pmpd_html_m168676b4.png" NAME="Image8" ALIGN=LEFT WIDTH=495 HEIGHT=211 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal; text-decoration: none">
+<FONT SIZE=3><B>Figure 6:</B> <FONT SIZE=2>&ldquo;tLink&rdquo;
+example</FONT></FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT SIZE=3>Figure 6 shows
+how to use the &ldquo;tLink2D&rdquo; object to determine the size and
+orientation of a rendered  link between two spherical masses.</FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=4 STYLE="font-size: 16pt">	Displacement</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>Masses
+can also be displaced without inertia (translated), according to
+displacement message. This is not physical behavior, but can be
+useful for different reasons: </FONT>
+</P>
+<P STYLE="margin-left: 2.51cm; text-indent: -1.27cm; margin-bottom: 0cm; font-style: normal">
+<FONT SIZE=3>-If you know the global equation of a movement, you can
+use displacement message to simulate this equation (like in the
+provided vertex examples).</FONT></P>
+<P ALIGN=LEFT STYLE="margin-left: 2.51cm; text-indent: -1.27cm; margin-bottom: 0cm; font-style: normal">
+<FONT SIZE=3>-You can use this to create non &ldquo;unnatural&rdquo;
+movements of your desire</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=5 STYLE="font-size: 20pt">Using
+pmpd</FONT></P>
+<P STYLE="margin-bottom: 0cm">	<FONT SIZE=4 STYLE="font-size: 16pt">Compilation</FONT></P>
+<P STYLE="margin-bottom: 0cm">The pmpd library only performs
+mathematical calculations, so there is no dependencies. Compilation
+should be very easy: Go to the pmpd folder and type make pd_linux,
+pd_darwin or pd_nt depending on the platform you are using. For other
+platforms, you should modify the makefile.</P>
+<P STYLE="margin-bottom: 0cm">In any case, binary files are provide
+for this 3 OS (compiled for pd 0.37).</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">	<FONT SIZE=4 STYLE="font-size: 16pt">Installation</FONT></P>
+<P STYLE="margin-bottom: 0cm">For testing pmpd, you can load
+&ldquo;00_pmpd&rdquo; patch: it will load the library in pd's memory
+(if pmpd lib is in the same directory).  All pmpd object can then be
+created.</P>
+<P STYLE="margin-bottom: 0cm">For daily use, you can put pmpd
+somewhere pd will find it (or add -path were_pmpd_is)</P>
+<P STYLE="margin-bottom: 0cm">then add -lib pmpd on you command line
+(in the .pdrc file for linux / OSX user, or in your .bat file for
+win32 users).  You should now see the pmpd text line on the pd log
+when you start pd.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">You should also move the help files to
+your /pd/doc/5.reference directory.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt">	Examples</FONT></P>
+<P STYLE="margin-bottom: 0cm">The best way to understand the
+capabilities of pmpd is to try the set of examples. These examples
+provide a wild range of different applications of pmpd, and some
+explanation of how pmpd works. You need a recent version of pd (i.e.
+0.37, not tested on earlier versions). Most of the examples use GEM
+for the visualisation of the virtual world. GEM 0.888 is recommended:
+some examples may not work on earlier version. There are no other
+dependencies. 
+</P>
+<P STYLE="margin-bottom: 0cm">GEM is then needed to use the examples.
+But there is no need to have gem to use pmpd: you can use it only for
+audio synthesis.</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>The
+aim of the provided examples is only to describe behavior of a
+system, not to make artful graphical effects.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>After seeing the examples,
+you can try creating your first patch using these objects. Look at
+the help files for more specific information on each object.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt">	Using
+pmpd with pd</FONT></P>
+<P STYLE="margin-bottom: 0cm"><SPAN STYLE="background: transparent">&ldquo;<FONT SIZE=3>Mass&rdquo;
+and &ldquo;link&rdquo; objects have to be connected in the following
+way:</SPAN></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3><SPAN STYLE="background: transparent">	-&ldquo;mass&rdquo;
+objects send position and receive force from &ldquo;link&rdquo;
+objects </SPAN></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3><SPAN STYLE="background: transparent">	-&ldquo;link&rdquo;
+objects receive two mass positions and output forces for both masses</SPAN></FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_m144b1b8a.png" NAME="Image24" ALIGN=LEFT WIDTH=300 HEIGHT=130 BORDER=0><BR CLEAR=LEFT><IMG SRC="pmpd_html_m59554ddc.png" NAME="Image23" ALIGN=LEFT WIDTH=300 HEIGHT=140 BORDER=0><BR CLEAR=LEFT><FONT SIZE=3><B>Figure
+7</B>:<FONT SIZE=2> a small system, and it's equivalent using pmpd
+and pd</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>In figure 7, mass 1 and 3
+do not receive forces (inlet are not connected),  therefore they will
+never move; they act like a fixed point.</FONT> Mass 2 is linked to 2
+fixed points with springs with no damping. Hence, movement will never
+end (it corresponds with a system without energy loss).</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">&ldquo;<FONT SIZE=3>mass&rdquo; objects
+have outlets for their internal state; they report their position,
+the total force applied to them and their speed. This parameters can
+be used to generate data controlling audio/video synthesis.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>A single mass/spring acts
+as a low pass filter. You can use pmpd to filter data, to do other
+kind of data treatment, or to make variations more &ldquo;natural&rdquo;
+behavio</FONT>r<FONT SIZE=3> for the evolution of an audio or video
+process.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>	</FONT><FONT SIZE=4 STYLE="font-size: 16pt">Topology</FONT></P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal">A
+structure and its components can be modelled according to the
+topology, that is a defined set of interactions: different dynamic
+systems  can be  modelled using different topologies.  
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><IMG SRC="pmpd_html_9481d61.png" NAME="Image9" ALIGN=LEFT WIDTH=300 HEIGHT=300 BORDER=0><BR CLEAR=LEFT><IMG SRC="pmpd_html_m918eb0.png" NAME="Image10" ALIGN=LEFT WIDTH=300 HEIGHT=300 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><B>Figure
+8:</B> <FONT SIZE=2>Two different topology for the same object.</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><SPAN STYLE="font-style: normal">Figure
+8 is an example of a two different topologies. Masses are the
+spheres, link are the white lines. <FONT SIZE=3>The same set of
+masses are link in two different way. The physical behavior of this
+structure will differ according to its topology.</FONT></SPAN></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>	<FONT SIZE=4 STYLE="font-size: 16pt">Generality
+</FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>All objects can be created
+using &ldquo;pmpd.<I>name&rdquo; </I><SPAN STYLE="font-style: normal">where
+</SPAN><I>name</I><SPAN STYLE="font-style: normal"> is the name of a
+specific object.  This </SPAN> can be used to avoid name conflicts
+with other objects.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>Most of the objects
+parameters can be set at the creation of the object as argument, but
+they can be modified using a messages sent to the first inlet.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>It is possible to choose
+non-physical values for pmpd parameters. For example, you can set 
+damping to a negative value, which mean energies creation. This is
+not physical and can lead to instability or saturation of the model,
+but can be useful for artistic reason. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>You should also take care
+while changing parameters like rigidity. This can lead to energy
+creation or lost, depending of the deformation of the structure.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>The
+most important problem using physical modelling is the instability. 
+To reduce the risk of instability you should slow down your model
+(increasing the metronome speed can be necessary to keep the desired
+speed of the simulation). Reducing force in the simulation is usually
+a good way to attack instability problems.  Initialising masses close
+to a stable state can also help.</FONT></P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3>Especially
+with the mass class reference system, pmpd may perform many
+calculations at the same time. This can require much of CPU usage.
+Long audio buffer may help to avoid audio clicks.</FONT></P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=5 STYLE="font-size: 20pt">Objects
+reference</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=4 STYLE="font-size: 16pt">	mass</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	This is a 1D mass. This
+object's inlet need forces (float), and outlet it's position (float).</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>All forces send to it's
+inlet are add together. A bang allow the mass to compute it's new
+position, and to output it. The mass can move due to it's inertia.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	mass, pmpd.mass, masse</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: weight of the mass (1)
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm">	3: initial position (0)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang:</P>
+<P STYLE="margin-bottom: 0cm">		compute new position of the mass,
+according to the forces apply to it.</P>
+<P STYLE="margin-bottom: 0cm">	float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		add a force. Each forces are add
+together.</P>
+<P STYLE="margin-bottom: 0cm">	dX float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.</P>
+<P STYLE="margin-bottom: 0cm">	setM float:</P>
+<P STYLE="margin-bottom: 0cm">		change the weight of this mass.</P>
+<P STYLE="margin-bottom: 0cm">	setX float:</P>
+<P STYLE="margin-bottom: 0cm">		force the mass to a certain position.
+Reset inertia and forces. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	setXmin float:</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum position of the mass.
+</P>
+<P STYLE="margin-bottom: 0cm">	setXmax float:</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum position of the mass.
+The mass can&nbsp;'t go above this values.</P>
+<P STYLE="margin-bottom: 0cm">	reset: 
+</P>
+<P STYLE="margin-bottom: 0cm">		reset position to it's initial state,
+force and inertia to zero. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	loadbang:</P>
+<P STYLE="margin-bottom: 0cm">		output initial position on
+initialisation</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	position (float): position of the mass
+according to it's inertia, and forces</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Outlet 2: 
+</P>
+<P STYLE="margin-bottom: 0cm">	force (float): global force apply to
+the mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Outlet 3: 
+</P>
+<P STYLE="margin-bottom: 0cm">	velocity (float): global velocity of
+the mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	link</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	This is the 1D link
+between masses. This object is used to link 2 masses together to
+allow interaction between them. Interaction is mainly visco-elastic.
+Position of the 2 masses are receive too the corresponding inlets.
+Forces is compute and output when this object receive a bang.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>Creators: link, pmp.link, 
+lia</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the link.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: L: length of the link
+without deformations. (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: K: rigidity
+coefficient (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm">	4: Damping (0)</P>
+<P STYLE="margin-bottom: 0cm">	5: Damping 2 (0)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_m77240556.png" NAME="Image12" ALIGN=LEFT WIDTH=350 HEIGHT=450 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><B>Figure
+9:<FONT SIZE=2> </FONT></B><FONT SIZE=2>Topology of a single link</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang: 
+</P>
+<P STYLE="margin-bottom: 0cm">		compute forces according to masses
+position and speed.</P>
+<P STYLE="margin-bottom: 0cm">	float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		position of the 1<SUP>st</SUP> mass</P>
+<P STYLE="margin-bottom: 0cm">	setK float:</P>
+<P STYLE="margin-bottom: 0cm">		Set rigidity of the link. Rigidity
+force is: F = K (L-L0). This force is apply 			symmetrically to the 2
+masses.</P>
+<P STYLE="margin-bottom: 0cm">	setL float:</P>
+<P STYLE="margin-bottom: 0cm">		Set initial length of the link.
+(change L0 value)</P>
+<P STYLE="margin-bottom: 0cm">	setLmin float:</P>
+<P STYLE="margin-bottom: 0cm">		Set minimum length of the link. If L
+&lt; Lmin, then output of the link will be 0. 			(initial value:
+-100000)</P>
+<P STYLE="margin-bottom: 0cm">	setLmax float:</P>
+<P STYLE="margin-bottom: 0cm">		Set maximum length of the link. If L
+&gt; Lmin, then output of the link will be 0</P>
+<P STYLE="margin-bottom: 0cm">		(initial value: 100000)</P>
+<P STYLE="margin-bottom: 0cm">	setD float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		Set the link viscosity. This
+corresponding to the deformation speed of the 			link. Damping force
+is: F = D (VX1 &ndash; VX2). This force is apply 					symmetrically
+to the 2 masses. (VX1 is the velocity of X1)</P>
+<P STYLE="margin-bottom: 0cm">	setD2 float:</P>
+<P STYLE="margin-bottom: 0cm">		Set velocity damping. (corresponding
+to speed of each mass).  Force generated by 		this factor is not
+symmetrical.  This force is: F1 = D2  * VX1 for the first mass (and  
+</P>
+<P STYLE="margin-bottom: 0cm">		F2 = D2  * VX2 for the 2<SUP>nd</SUP>
+one).</P>
+<P STYLE="margin-bottom: 0cm">	reset:</P>
+<P STYLE="margin-bottom: 0cm">		reset all internal state of the link.</P>
+<P STYLE="margin-bottom: 0cm">	resetF:</P>
+<P STYLE="margin-bottom: 0cm">		reset internal state, in a way
+generated forces will be null (damping)</P>
+<P STYLE="margin-bottom: 0cm">	resetL:</P>
+<P STYLE="margin-bottom: 0cm">		set the length of the link without
+deformation to it's currents length.</P>
+<P STYLE="margin-bottom: 0cm">		With can be used to create topology
+by placing the masse, and then the link can adapt 		them self to the
+shape of the topology. 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 2:</P>
+<P STYLE="margin-bottom: 0cm">	float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		position of the 2<SUP>nd</SUP> mass</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	float:</P>
+<P STYLE="margin-bottom: 0cm">		force to apply to the 1<SUP>st</SUP>
+mass</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 2: 
+</P>
+<P STYLE="margin-bottom: 0cm">	float:</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>		force to apply to the
+2<SUP>nd</SUP> mass</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>If K, D and D2 = 0, then
+forces generated by the link will be null.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	mass2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	This is the 2D mass. This
+object's inlet need forces, and outlet it's position.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>All forces send to it's
+inlet are add together. A bang allow the mass to compute it's new
+position, and to output it. The mass can move due to it's inertia.
+This is like the 1D object, but forces / displacement append in 2D.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	mass2D, pmpd.mass2D,
+masse2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: weight of the mass (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm">	3: initial position X (0)</P>
+<P STYLE="margin-bottom: 0cm">	4: initial position Y (0)</P>
+<P STYLE="margin-bottom: 0cm">	5: X min (-100000)</P>
+<P STYLE="margin-bottom: 0cm">	6: X max (10000)</P>
+<P STYLE="margin-bottom: 0cm">	7: Y min (-100000)</P>
+<P STYLE="margin-bottom: 0cm">	8: Y max (10000)</P>
+<P STYLE="margin-bottom: 0cm">	9: Threshold (0)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang:</P>
+<P STYLE="margin-bottom: 0cm">		comput new position of the mass,
+according to the forces apply to it.</P>
+<P STYLE="margin-bottom: 0cm">	force2D float float:</P>
+<P STYLE="margin-bottom: 0cm">		add a force. Each forces are add
+together.</P>
+<P STYLE="margin-bottom: 0cm">	setM float:</P>
+<P STYLE="margin-bottom: 0cm">		change the weight of this mass.</P>
+<P STYLE="margin-bottom: 0cm">	setXY float float:</P>
+<P STYLE="margin-bottom: 0cm">		force the mass to a certain position.
+Reset inertia and forces. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	setX float:</P>
+<P STYLE="margin-bottom: 0cm">		force the mass to a certain position
+(only X coordinate). Reset inertia and forces. 		Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	setY float:</P>
+<P STYLE="margin-bottom: 0cm">		force the mass to a certain position.
+Reset inertia and forces. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	setXmin float:</P>
+<P STYLE="margin-bottom: 0cm">		set the X minimum position of the
+mass. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXmax float:</P>
+<P STYLE="margin-bottom: 0cm">		set the X maximum position of the
+mass.</P>
+<P STYLE="margin-bottom: 0cm">	setYmin float:</P>
+<P STYLE="margin-bottom: 0cm">		set the Y minimum position of the
+mass. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setYmax float:</P>
+<P STYLE="margin-bottom: 0cm">		set the Y maximum position of the
+mass. The mass can&nbsp;'t go above this values.</P>
+<P STYLE="margin-bottom: 0cm">	setT float:</P>
+<P STYLE="margin-bottom: 0cm">		Set the threshold of the mass. This
+is for solid friction to the wall simulation. 			(useful only for
+friction on Xmin, Xmax, Ymin, Ymax limits)</P>
+<P STYLE="margin-bottom: 0cm">	dXY float float:</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia (X
+and Y displacement).</P>
+<P STYLE="margin-bottom: 0cm">	dX float:</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.(X 
+displacement)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">	dY float:</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.(Y
+displacement)</P>
+<P STYLE="margin-bottom: 0cm">	reset:</P>
+<P STYLE="margin-bottom: 0cm">		reset position to it's initial state,
+force and inertia to zero. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	resetF:</P>
+<P STYLE="margin-bottom: 0cm">		reset force and displacement to zero.
+Does not change position.</P>
+<P STYLE="margin-bottom: 0cm">	off:</P>
+<P STYLE="margin-bottom: 0cm">		stop the movement of the mass. (the
+mass will not react to bang message, but can 		get forces messages)</P>
+<P STYLE="margin-bottom: 0cm">	on:</P>
+<P STYLE="margin-bottom: 0cm">		start the movement of the mass.</P>
+<P STYLE="margin-bottom: 0cm">	interactor_...</P>
+<P STYLE="margin-bottom: 0cm">		apply forces to the mass due to
+interactors position and comportment.</P>
+<P STYLE="margin-bottom: 0cm">		See later</P>
+<P STYLE="margin-bottom: 0cm">	loadbang:</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>		output initial position
+on initialisation</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	position2D float float: X and Y new
+position of the mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 2: 
+</P>
+<P STYLE="margin-bottom: 0cm">	force2D float float float: X, Y and
+global force apply to the mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 3: 
+</P>
+<P STYLE="margin-bottom: 0cm">	velocity2D float float float: X, Y and
+global velocity of the mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">(only outlet 1 is needed for the
+simulation, the other are here to provide information for audio or
+video synthesis)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	link2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	This is the 2D link
+between 2D masses. This object is used to link 2 masses together to
+allow interaction between them. Interaction is mainly visco-elastic.
+Position of the 2 masses are receive to the corresponding inlets.
+Forces is compute and output when this object receive a bang.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>Creators: link2D,
+pmp.link2D,  lia2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the link.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: L: length of the link
+without deformations. (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: K: rigidity
+coefficient (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm">	4: Damping. This is the damping
+corresponding to the deformation speed of the link) (0)</P>
+<P STYLE="margin-bottom: 0cm">	5: Damping 2. Damping corresponding to
+speed of each mass. Force generated by this 			factor is not
+symmetrical. (0)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_m56a03c47.png" NAME="Image13" ALIGN=LEFT WIDTH=276 HEIGHT=263 BORDER=0><BR CLEAR=LEFT><IMG SRC="pmpd_html_m5f590644.png" NAME="Image14" ALIGN=LEFT WIDTH=305 HEIGHT=280 BORDER=0><BR CLEAR=LEFT><I>	</I><SPAN STYLE="font-style: normal"><FONT SIZE=2>Topology
+of a single link2D 	Forces generate by this link </FONT></SPAN>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><B>Figure
+10:</B> <FONT SIZE=2>Link2D topology</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Damping and rigidity forces are
+parallel to the link, while D2 is parallel to the velocity of the
+mass</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">Da = - Db</P>
+<P STYLE="margin-bottom: 0cm">and</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">Ka = - Kb</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm">The global generated force
+is: 
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">Fa = Ka + Da + D2a</P>
+<P STYLE="margin-bottom: 0cm">and 
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm">Fb = Kb + Db + D2b</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang: 
+</P>
+<P STYLE="margin-bottom: 0cm">		compute forces according to masses
+position and speed.</P>
+<P STYLE="margin-bottom: 0cm">	Position2D float float:</P>
+<P STYLE="margin-bottom: 0cm">		position of the 1<SUP>st</SUP> mass
+(X, Y) 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">	setK float:</P>
+<P STYLE="margin-bottom: 0cm">		Set rigidity of the link. Rigidity
+force is: F = K (L-L0). This force is apply 			symmetrically to the 2
+masses.</P>
+<P STYLE="margin-bottom: 0cm">	setL float:</P>
+<P STYLE="margin-bottom: 0cm">		Set initial length of the link.
+(change L0 value)</P>
+<P STYLE="margin-bottom: 0cm">	setLmin float:</P>
+<P STYLE="margin-bottom: 0cm">		Set minimum length of the mass. If L
+&lt; Lmin, then output of the link will be 0</P>
+<P STYLE="margin-bottom: 0cm">	setLmax float:</P>
+<P STYLE="margin-bottom: 0cm">		Set maximum length of the mass. If L
+&gt; Lmin, then output of the link will be 0</P>
+<P STYLE="margin-bottom: 0cm">	setD float:</P>
+<P STYLE="margin-bottom: 0cm">		Set the link viscosity. Damping force
+is: F = D (VX1 &ndash; VX2). This force is apply 		symmetrically to
+the 2 masses. (VX1 is the velocity of X1)</P>
+<P STYLE="margin-bottom: 0cm">	setD2 float:</P>
+<P STYLE="margin-bottom: 0cm">		Set velocity damping. This force is:
+F1 = D2  * VX1 for the first mass (and  
+</P>
+<P STYLE="margin-bottom: 0cm">		F2 = D2  * VX2 for the 2<SUP>nd</SUP>
+one).</P>
+<P STYLE="margin-bottom: 0cm">	reset:</P>
+<P STYLE="margin-bottom: 0cm">		reset all internal state of the link.</P>
+<P STYLE="margin-bottom: 0cm">	resetF:</P>
+<P STYLE="margin-bottom: 0cm">		reset internal state, in a way
+generated forces will be null</P>
+<P STYLE="margin-bottom: 0cm">	resetL:</P>
+<P STYLE="margin-bottom: 0cm">		set the length of the link without
+deformation to it's current length.</P>
+<P STYLE="margin-bottom: 0cm">		Which can be used to create topology
+by placing the mass, and then the link can 			adapt them self to the
+shape of the topology. 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 2:</P>
+<P STYLE="margin-bottom: 0cm">	Position2D float float:</P>
+<P STYLE="margin-bottom: 0cm">		(X, Y) position of the 2<SUP>nd</SUP>
+mass</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	force2D float float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		force to apply to the 1<SUP>st</SUP>
+mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 2: force2D float float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		force to apply to <FONT SIZE=3>the
+2<SUP>nd</SUP> mass</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tLink2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	This is a test object. It
+only output informations about a specific link on 2 masses. You
+		should connect it's inlet like a normal link connection. It's
+outlet correspond  to internal 		variables of a link. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tLink2D,
+pmpd.tLink2D, tLia2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the link (to
+allow receiving bang). (It also receive other message desalinated to
+a 	link without complaining)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang: 
+</P>
+<P STYLE="margin-bottom: 0cm">		output information of the specific
+link.</P>
+<P STYLE="margin-bottom: 0cm">	position2D float float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		position of 1<SUP>st</SUP> mass</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 2:</P>
+<P STYLE="margin-bottom: 0cm">	position2D float float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		position of 2<SUP>nd</SUP> mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		distance between two masses</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 2: 
+</P>
+<P STYLE="margin-bottom: 0cm">	float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		length variation speed of the link 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 3: 
+</P>
+<P STYLE="margin-bottom: 0cm">	float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		orientation of the link (degree
+angle)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 4: 
+</P>
+<P STYLE="margin-bottom: 0cm">	position2D float float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		position of the center of the link 
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iambient2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between ambient space and a class of masses. The class
+of masses is set with masses name.</FONT></P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Interactor
+create different force depending of the mass speed and position. So
+it should be used like a link. Interactors object should then be
+banged in the same time as link objects.</FONT></P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>They
+should be used to create multiples connection, and should then create
+patching 	simplifications.</FONT></P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>A
+single interactor can create lot's of link.</FONT></P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iambient2D,
+pmpd.iambient2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass (send
+interactors informations to this masses)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: FX (constant X force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: FY (constant Y force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Rnd FX (random X force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Rnd FY (random Y force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Damping (velocity
+damping of the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Xmin (-100000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: Xmax (100000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: Ymin (-100000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: Ymax (100000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: dX (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: dY (0)</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><IMG SRC="pmpd_html_m5eeebba3.png" NAME="Image11" ALIGN=LEFT WIDTH=346 HEIGHT=243 BORDER=0><BR CLEAR=LEFT><B>Figure
+11:</B> <FONT SIZE=2>ambient interactor.</FONT></P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setFXY float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		change the constant force (X, Y) to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFX float</P>
+<P STYLE="margin-bottom: 0cm">		change the constant force (X) to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFY float</P>
+<P STYLE="margin-bottom: 0cm">		change the constant force (Y) to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRndFX float 
+</P>
+<P STYLE="margin-bottom: 0cm">		change the random maximum force (X)
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRndFY float  
+</P>
+<P STYLE="margin-bottom: 0cm">		change the random maximum force (Y)
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	dXY float 
+</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.</P>
+<P STYLE="margin-bottom: 0cm">	dX float 
+</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.(X 
+displacement)</P>
+<P STYLE="margin-bottom: 0cm">	dY float</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.(Y
+displacement)</P>
+<P STYLE="margin-bottom: 0cm">	setD float</P>
+<P STYLE="margin-bottom: 0cm">		change damping factor of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setXmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the X minimum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the X maximum position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setYmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y minimum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setYmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y maximum position of the
+interactor. The mass don't interact with this 			interactor if it's
+outside it's bounds.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass2D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm">	You can make a mass to interact with
+the interactor by two different way: 
+</P>
+<P STYLE="margin-bottom: 0cm">		set the name of the interactor to the
+name of the mass.</P>
+<P STYLE="margin-bottom: 0cm">		Connect interactor output to mass 1<SUP>st</SUP>
+inlet. 
+</P>
+<P STYLE="margin-bottom: 0cm">	</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tSquare2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	Test object. This object
+should be used to test position of a specific mass. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tSquare2D,
+pmpd.tSquare2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: Xmin (-1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: Xmax (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Ymin (-1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Ymax (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	setXmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the X minimum (Xmin) position of
+the test. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the X maximum position of the
+test.</P>
+<P STYLE="margin-bottom: 0cm">	setYmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y minimum position of the
+test. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setYmax float</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>		set the Y maximum
+position of the test. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	position2D float float: position off a
+mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	float (0 / 1): 0 if the mass is
+outside the square define with Xmin, Xmax, Ymin, Ymax.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iCircle2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between a part of the space and a class of masses.
+This interactor act as a link to a point. (the center on the
+interactor point can be change, So this object can be set The class
+of masses is set with masses name.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iCircle2D,
+pmpd.iCircle2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass to
+interact with </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: X0: X coordinate of
+the center of the interactor  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Y0: Y coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Rmin: minimum radius
+of the interactors (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Rmax: maximum radius
+of the interactor (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: normal constant force
+(force  along n vector) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: tangential constant
+force (force  along t vector) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: normal rigidity(normal
+force proportional to P (depth of the mass)) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: tangential rigidity
+(tangential force proportional to P (depth of the mass)) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: normal force
+proportional to 1/R (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: tangential force
+proportional to 1/R (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: normal damping
+(damping due tu normal velocity) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	13: tangential damping
+(0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	14: normal displacement</FONT>
+proportional to 1/R<FONT SIZE=3> (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	15: tangential
+displacement</FONT> proportional to 1/R<FONT SIZE=3> (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm">	16: link damping<FONT SIZE=3> (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm">	17:<FONT SIZE=3> normal force
+proportional to 1/R<SUP>2 </SUP> (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	18: normal displacement
+(0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	19: tangential
+displacement (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_6dd5453d.png" NAME="Image17" ALIGN=LEFT WIDTH=327 HEIGHT=315 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=3><FONT SIZE=2>Blue
+point is a mass, red point is the center of the interactor</FONT> </FONT>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><B>Figure
+12</B>:<FONT SIZE=2> iCircle2D</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setXY float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant force to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFT float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant force to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal rigidity to apply
+to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential rigidity to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setDN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal damping</P>
+<P STYLE="margin-bottom: 0cm">	setDT float</P>
+<P STYLE="margin-bottom: 0cm">		set the tangential damping</P>
+<P STYLE="margin-bottom: 0cm">	setD float</P>
+<P STYLE="margin-bottom: 0cm">		set link damping</P>
+<P STYLE="margin-bottom: 0cm">	setRN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal force proportional
+to 1/R to apply to the mass</P>
+<P STYLE="margin-bottom: 0cm">	setRT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential force
+proportional to 1/R to apply to the mass</P>
+<P STYLE="margin-bottom: 0cm">	setdN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">	setdT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">	setG float</P>
+<P STYLE="margin-bottom: 0cm">		change the force proportional to <FONT SIZE=3>1/R<SUP>2</SUP>
+ </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	setdRN float</FONT></P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement
+proportional to 1/R to apply to the mass</P>
+<P STYLE="margin-bottom: 0cm">	setdRT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tengential displacement
+proportional to 1/R to apply to the mass</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass2D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tCircle2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	this is the test object
+associated with iCircle2D. It can test different things associated
+with the position or movement of a mass among a circle.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tCircle2D,
+pmpd.tCircle2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: X0: X coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: Y0: Y coordinate of
+the center of the interactor  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Rmin: minimum radius
+of the interactors (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Rmax: maximum radius
+of the interactor  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	setXY float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	1: float (0/1) tells if the mass is in
+the in the Circle or not (R&lt;Rmax &amp; R&gt;Rmin)</P>
+<P STYLE="margin-bottom: 0cm">	2: float: distance form the center of
+the circle</P>
+<P STYLE="margin-bottom: 0cm">	3: speed from the center of the circle</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iLine2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between a part of the space and a class of masses.
+This interactor act as a link to a line. (the line is define with 2
+points). It react like all interactors objects.</FONT></P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"> 
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iLine2D,
+pmpd.iLine2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: X1 (-1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Y1 (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: X2 (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Y2 (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Maximum depth (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Normal constant force
+(0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: tangential constant
+force (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: Normal rigidity (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: Normal Damping (0) </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: Tangential damping
+(0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: normal displacement
+(0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	13: tangential
+displacement (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_7d51ce4f.png" NAME="Image16" ALIGN=LEFT WIDTH=479 HEIGHT=462 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><B>Figure
+13:</B><FONT SIZE=2> tLine2D topology</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setX1 float  
+</P>
+<P STYLE="margin-bottom: 0cm">		set X1</P>
+<P STYLE="margin-bottom: 0cm">	setY1 float  
+</P>
+<P STYLE="margin-bottom: 0cm">		set Y1</P>
+<P STYLE="margin-bottom: 0cm">	setX2 float</P>
+<P STYLE="margin-bottom: 0cm">		set X2</P>
+<P STYLE="margin-bottom: 0cm">	setY2  float</P>
+<P STYLE="margin-bottom: 0cm">		set Y2 
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the depth of the interaction 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant force to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential constant force
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal rigidity to apply
+to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setDN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal damping</P>
+<P STYLE="margin-bottom: 0cm">	setDT float</P>
+<P STYLE="margin-bottom: 0cm">		set the tangential damping</P>
+<P STYLE="margin-bottom: 0cm">	setdN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant
+displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">	setdT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential constant
+displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass2D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tLine2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	this is the test object
+associated with iLine2D. It can test different things associated with
+the position or movement of a mass among the line.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>Creators: tLine2D,
+pmpd.tLine2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: X1: X coordinate of
+the center of the interactor </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: Y1: Y coordinate of
+the center of the interactor </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: X2: X coordinate of
+the center of the interactor </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Y2: Y coordinate of
+the centerr of the interactor </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Pmax: maximum depth of
+the interactors</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	setXY float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum depth of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	1: float (0/1) tells if the mass is in
+the in a Line interaction or not</P>
+<P STYLE="margin-bottom: 0cm">	2: float: distance form the line</P>
+<P STYLE="margin-bottom: 0cm">	3: speed regarding the distance of the
+line</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iSeg2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between a part of the space and a class of masses.
+This interactor act as a link to a segment. (the segment is define
+with 2 points). It react like all interactors objects.</FONT></P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"> 
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iSeg2D,
+pmpd.iSeg2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: X1 (-1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Y1 (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: X2 (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Y2 (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Maximum depth (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Normal Constant Force
+(0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: tangential Constant
+Force (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: Normal rigidity (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: Normal Damping (0) </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: Tangential damping
+(0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: normal displacement
+(0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	13: tangential
+displacement (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_7a9ab870.png" NAME="Image15" ALIGN=LEFT WIDTH=491 HEIGHT=482 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><B>Figure
+14:</B> <FONT SIZE=2>tSeg2D topology</FONT></P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setX1 float  
+</P>
+<P STYLE="margin-bottom: 0cm">		set X1</P>
+<P STYLE="margin-bottom: 0cm">	setY1 float  
+</P>
+<P STYLE="margin-bottom: 0cm">		set Y1</P>
+<P STYLE="margin-bottom: 0cm">	setX2 float</P>
+<P STYLE="margin-bottom: 0cm">		set X2</P>
+<P STYLE="margin-bottom: 0cm">	setY2  float</P>
+<P STYLE="margin-bottom: 0cm">		set Y2 
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the depth of the interaction 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant force to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential constant force
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal rigidity to apply
+to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setDN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal damping</P>
+<P STYLE="margin-bottom: 0cm">	setDT float</P>
+<P STYLE="margin-bottom: 0cm">		set the tangential damping</P>
+<P STYLE="margin-bottom: 0cm">	setdN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">	setdT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass2D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tSeg2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	this is the test object
+associated with iSeg2D. It can test different things associated with
+the position and movement of a mass among the line.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>Creators: tLine2D,
+pmpd.tLine2D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: X1: X coordinate of
+the center of the interactor </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: Y1: Y coordinate of
+the center of the interactor </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: X1: X coordinate of
+the center of the interactor </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Y1: Y coordinate of
+the center of the interactor </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Pmax: maximum depth of
+the interactors</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	setXY float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	1: float (0/1) tells if the mass is in
+the in a Line interaction or not</P>
+<P STYLE="margin-bottom: 0cm">	2: float: distance form the segment</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: speed regarding the
+distance to the segment</FONT></P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	mass3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	This is the 3D mass (a
+mass which can move in 3 dimension). This object's inlet need forces,
+and outlet it's position.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>All forces send to it's
+inlet are add together. A bang allow the mass to compute it's new
+position, and to output it. The mass can move due to it's inertia.
+This is like the 3D object, but forces and displacement append in 3D.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	mass3D, pmpd.mass3D,
+masse3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: weight of the mass</FONT></P>
+<P STYLE="margin-bottom: 0cm">	3: initial position X</P>
+<P STYLE="margin-bottom: 0cm">	4: initial position Y</P>
+<P STYLE="margin-bottom: 0cm">	5: initial position Z</P>
+<P STYLE="margin-bottom: 0cm">	6: X min</P>
+<P STYLE="margin-bottom: 0cm">	7: X max</P>
+<P STYLE="margin-bottom: 0cm">	8: Y min 
+</P>
+<P STYLE="margin-bottom: 0cm">	9: Y max</P>
+<P STYLE="margin-bottom: 0cm">	10: Z min 
+</P>
+<P STYLE="margin-bottom: 0cm">	11: Z max</P>
+<P STYLE="margin-bottom: 0cm">	12: Threshold</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang:</P>
+<P STYLE="margin-bottom: 0cm">		compute new position of the mass,
+according to the forces apply to it.</P>
+<P STYLE="margin-bottom: 0cm">	force3D float float float:</P>
+<P STYLE="margin-bottom: 0cm">		send a force to the mass. Each forces
+are add together.</P>
+<P STYLE="margin-bottom: 0cm">	setM float:</P>
+<P STYLE="margin-bottom: 0cm">		change the weight of this mass.</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float:</P>
+<P STYLE="margin-bottom: 0cm">		force the mass to a certain position.
+Reset inertia and forces. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	setX float:</P>
+<P STYLE="margin-bottom: 0cm">		force the mass to a certain position.
+Reset inertia and forces. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	setY float:</P>
+<P STYLE="margin-bottom: 0cm">		force the mass to a certain position.
+Reset inertia and forces. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	setZ float:</P>
+<P STYLE="margin-bottom: 0cm">		force the mass to a certain position.
+Reset inertia and forces. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	dXYZ float float float:</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia (X
+, Y and Z displacement).</P>
+<P STYLE="margin-bottom: 0cm">	dX float:</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia (X
+displacement).</P>
+<P STYLE="margin-bottom: 0cm">	dY float:</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia (Y
+displacement).</P>
+<P STYLE="margin-bottom: 0cm">	dZ float:</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia (Z
+displacement).</P>
+<P STYLE="margin-bottom: 0cm">	setXmin float:</P>
+<P STYLE="margin-bottom: 0cm">		set the X minimum position of the
+mass. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXmax float:</P>
+<P STYLE="margin-bottom: 0cm">		set the X maximum position of the
+mass.</P>
+<P STYLE="margin-bottom: 0cm">	setYmin float:</P>
+<P STYLE="margin-bottom: 0cm">		set the Y minimum position of the
+mass. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setYmax float:</P>
+<P STYLE="margin-bottom: 0cm">		set the Y maximum position of the
+mass.</P>
+<P STYLE="margin-bottom: 0cm">	setZmin float:</P>
+<P STYLE="margin-bottom: 0cm">		set the Z minimum position of the
+mass. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setZmax float:</P>
+<P STYLE="margin-bottom: 0cm">		set the Z maximum position of the
+mass. The mass can&nbsp;'t go above this values.</P>
+<P STYLE="margin-bottom: 0cm">	setT float:</P>
+<P STYLE="margin-bottom: 0cm">		Set the threshold of the mass. When
+the mass is at Xmin, Xmax, Ymin or Ymax, 		then a  threshold is apply
+to the force: if the force apply to the mass is inferior to the
+		threshold, then no movement will be generated. This is for solid
+friction to the wall 		simulation.<BR>	reset:</P>
+<P STYLE="margin-bottom: 0cm">		reset position to it's initial state,
+force and inertia to zero. Output new position.</P>
+<P STYLE="margin-bottom: 0cm">	resetF:</P>
+<P STYLE="margin-bottom: 0cm">		reset total force applied to the
+mass.</P>
+<P STYLE="margin-bottom: 0cm">	off:</P>
+<P STYLE="margin-bottom: 0cm">		stop the movement of the mass.</P>
+<P STYLE="margin-bottom: 0cm">	on:</P>
+<P STYLE="margin-bottom: 0cm">		start the movement of the mass.</P>
+<P STYLE="margin-bottom: 0cm">	interactor_...</P>
+<P STYLE="margin-bottom: 0cm">		apply forces to the mass due to
+interactors position and comportment.</P>
+<P STYLE="margin-bottom: 0cm">		See later</P>
+<P STYLE="margin-bottom: 0cm">	loadbang:</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>		output initial position
+on initialisation</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float float: X, Y, Z
+new position of the mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 2:</P>
+<P STYLE="margin-bottom: 0cm">	force3D float float float float: X, Y,
+Z and global force apply to the mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 3:</P>
+<P STYLE="margin-bottom: 0cm">	velocity3D float float float float: X,
+Y, Z and global velocity of the mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">(only outlet 1 is needed for the
+simulation, the other are here to provide information for audio or
+video synthesis)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	link3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	This is like the link2D
+but for 3D simulation. This object is used to link 2 masses together
+to allow interaction between them. Interaction is mainly
+visco-elastic. Position of the 2 masses are receive to the
+corresponding inlets. Forces is compute and output when this object
+receive a bang.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>This object is similar to
+link2D, but in 3 dimensions...</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>Creators: link3D,
+pmp.link3D,  lia3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the link.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: L: length of the link
+without deformations. (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: K: rigidity
+coefficient (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm">	4: Damping. This is the damping
+corresponding to the deformation speed of the link) (0)</P>
+<P STYLE="margin-bottom: 0cm">	5: Damping 2. Damping corresponding to
+speed of each mass. Force generated by this 			factor is not
+symmetrical. (0)</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal">The
+topology of a 3D link is the same than a 2D link.</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1 (default value):</P>
+<P STYLE="margin-bottom: 0cm">	bang: 	</P>
+<P STYLE="margin-bottom: 0cm">		compute forces according to masses
+position / speed.</P>
+<P STYLE="margin-bottom: 0cm">	Position3D float float float: (0 0 0)</P>
+<P STYLE="margin-bottom: 0cm">		(X, Y, Z) position of the 1<SUP>st</SUP>
+mass</P>
+<P STYLE="margin-bottom: 0cm">	setK float: (0)</P>
+<P STYLE="margin-bottom: 0cm">		Set rigidity of the link. Rigidity
+force is: F = K (L-L0). This force is apply 			symmetrical to the 2
+masses.</P>
+<P STYLE="margin-bottom: 0cm">	setL float: (0)</P>
+<P STYLE="margin-bottom: 0cm">		Set initial length of the link.
+(change L0 value)</P>
+<P STYLE="margin-bottom: 0cm">	setLmin float: (0)</P>
+<P STYLE="margin-bottom: 0cm">		Set minimum length of the mass. If L
+&lt; Lmin, then output of the link will be 0</P>
+<P STYLE="margin-bottom: 0cm">	setLmax float: (10000)</P>
+<P STYLE="margin-bottom: 0cm">		Set maximum length of the mass. If L
+&gt; Lmin, then output of the link will be 0</P>
+<P STYLE="margin-bottom: 0cm">	setD float: (0)</P>
+<P STYLE="margin-bottom: 0cm">		Set the link viscosity. Damping force
+is: F = D (VX1 &ndash; VX2). This force is apply 		symmetrical to the
+2 masses. (VX1 is the velocity of X1)</P>
+<P STYLE="margin-bottom: 0cm">	setD2 float: (0)</P>
+<P STYLE="margin-bottom: 0cm">		Set velocity damping. This force is:
+F1 = D2  * VX1 for the first mass (and  
+</P>
+<P STYLE="margin-bottom: 0cm">		F2 = D2  * VX2 for the 2<SUP>nd</SUP>
+one).</P>
+<P STYLE="margin-bottom: 0cm">	reset:</P>
+<P STYLE="margin-bottom: 0cm">		reset all internal state of the link.</P>
+<P STYLE="margin-bottom: 0cm">	resetF:</P>
+<P STYLE="margin-bottom: 0cm">		reset internal state, in a way
+generated forces will be null</P>
+<P STYLE="margin-bottom: 0cm">	resetL:</P>
+<P STYLE="margin-bottom: 0cm">		set the length of the link without
+deformation to the currents length.</P>
+<P STYLE="margin-bottom: 0cm">		this can be used to create topology
+by only placing the mass, the link can then adapt 		them-self to the
+shape of the topology. 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 2:</P>
+<P STYLE="margin-bottom: 0cm">	Position3D float float float (0 0 0):
+(X, Y, Z) position of the 2<SUP>nd</SUP> mass</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	force3D float float float: force to
+apply to the 1<SUP>st</SUP> mass 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 2: 
+</P>
+<P STYLE="margin-bottom: 0cm">	force3D float float float: force to
+apply to <FONT SIZE=3>the 2<SUP>nd</SUP> mass</FONT></P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tLink3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	This is a test object. It
+only output informations about a specific kink on 2 masses. You
+should connect it's inlet like a normal link connection. It's outlet
+correspond  to internal variables of a link. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tLink3D,
+pmpd.tLink3D, tLia3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the link (to
+allow receiving bang. It also receive other message destinated to a
+	link without complaining)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang: 
+</P>
+<P STYLE="margin-bottom: 0cm">		compute and output information about
+the link2D</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float: 
+</P>
+<P STYLE="margin-bottom: 0cm">		position of 1<SUP>st</SUP> mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 2:</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float: position of
+2<SUP>nd</SUP> mass 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	distance between two masses</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 2: 
+</P>
+<P STYLE="margin-bottom: 0cm">	float: length variation speed of the
+link 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 3: 
+</P>
+<P STYLE="margin-bottom: 0cm">	orientation of the link ( normal
+vector (X, Y, Z) of the link)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 4: 
+</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float float: position
+of the center of the link 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iambient3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between ambient space and a class of masses. The class
+of masses is set with masses name.</FONT></P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Interactor
+create different forces depending of the mass speed and position. So
+it should be used like a link. Interactors object should then be
+banged in the same time as link objects.</FONT></P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>They
+should be used to create multiples connection, and should then create
+patching 	simplifications.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iambient3D,
+pmpd.iambient3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass (send
+interactors informations to this masses)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: FX (constant X force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: FY (constant Y force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: FZ (constant Z force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Rnd FX (random X force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Rnd FY (random Y force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Rnd FZ (random Z force
+apply to the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: Damping (velocity
+damping of the masses) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: Xmin (minimum and
+maximum limit of the interactors) (-10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: Xmax (a mass interact
+with this object only if it is inside the interactor bounds) (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: Ymin (-10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: Ymax (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	13: Zmin (-10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	14: Zmax (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	15: dX (displace the mass
+by a constant value) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	16: dY (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	17: dZ (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setFXYZ float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		change the constant force (X, Y, Z)
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFX float 
+</P>
+<P STYLE="margin-bottom: 0cm">		change the constant force (X) to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFY float  
+</P>
+<P STYLE="margin-bottom: 0cm">		change the constant force (Y) to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFZ float  
+</P>
+<P STYLE="margin-bottom: 0cm">		change the constant force (Z) to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRndFX float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		change the random maximum force (X)
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRndFY float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		change the random maximum force (Y)
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRndFZ float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		change the random maximum force (Z)
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	dXYZ float 
+</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.(X,
+Y and Z displacement)</P>
+<P STYLE="margin-bottom: 0cm">	dX float 
+</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.(X 
+displacement)</P>
+<P STYLE="margin-bottom: 0cm">	dY float</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without inertia.(Y
+displacement)</P>
+<P STYLE="margin-bottom: 0cm">	dZ float</P>
+<P STYLE="margin-bottom: 0cm">		displace the masse without inertia.(Z
+displacement)</P>
+<P STYLE="margin-bottom: 0cm">	setD float</P>
+<P STYLE="margin-bottom: 0cm">		change damping factor of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setXmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the X minimum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the X maximum position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setYmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y minimum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setYmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y maximum position of the
+interactor</P>
+<P STYLE="margin-bottom: 0cm">	setZmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z minimum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setZmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z maximum position of the
+interactor. The mass don't interact with this 			interactor if it's
+outside it's bounds.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass3D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm">	You can make a mass to interact with
+the interactor by two different way: 
+</P>
+<P STYLE="margin-bottom: 0cm">		set the name of the interactor to the
+name of the mass.</P>
+<P STYLE="margin-bottom: 0cm">		Connect interactor output to mass 1<SUP>st</SUP>
+inlet. 
+</P>
+<P STYLE="margin-bottom: 0cm">	</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tCube3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	Test object. This object
+should be used to test position of a specific mass. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tCube3D,
+pmpd.tCube3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: Xmin (minimum and
+maximum limit of the interactors) (</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: Xmax (a mass interact
+with this object only if it is inside the interactor bounds)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Ymin</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Ymax</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Zmin</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Zmax</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float float</P>
+<P STYLE="margin-bottom: 0cm">		position of a mass 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXmin float (-1)</P>
+<P STYLE="margin-bottom: 0cm">		set the X minimum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXmax float (1)</P>
+<P STYLE="margin-bottom: 0cm">		set the X maximum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setYmin float (-1)</P>
+<P STYLE="margin-bottom: 0cm">		set the Y minimum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setYmax float (1)</P>
+<P STYLE="margin-bottom: 0cm">		set the Y maximum position of the
+interactor</P>
+<P STYLE="margin-bottom: 0cm">	setZmin float (-1)</P>
+<P STYLE="margin-bottom: 0cm">		set the Z minimum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm">	setZmax float (1)</P>
+<P STYLE="margin-bottom: 0cm">		set the Z maximum position of the
+interactor. 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	float (0 / 1): 0 if the mass is
+outside the square.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iCylindre3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between a part of the space and a class of masses. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iCylindre3D,
+pmpd.iCylindre3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass to
+interact with </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: VX: X coordinate of
+the orientation vector of the cylinder (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: VY: Y coordinate of
+the orientation vector of the cylinder (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: VZ: Z coordinate of
+the orientation vector of the cylinder (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: X: X0 coordinate of
+the center of the interactor  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Y: Y0 coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Z: Z0 coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: Rmin: minimum radius
+of the interactors (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: Rmax: maximum radius
+of the interactor (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: normal constant force
+(force  along n vector) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: normal
+rigidity(normal force proportional to R (radius of the mass)) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: link damping (damping
+due to the link velocity) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	13: normal force
+proportional to 1/R (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	14: normal force
+proportional to 1/R<SUP>2</SUP> (0)	</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	15: minimal depth
+(-10000): limit the action of the interactor in space </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	16: Maximal depth (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	17: tangential constant
+force (force along t vector) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	18: tangential rigidity
+(tangential force proportional to R (depth of the mass)) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	19: normal constant
+displacement (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	20: tangential constant
+displacement (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	21: normal displacement
+proportional to R (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	22: tangential
+displacement proportional to R (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><IMG SRC="pmpd_html_4b7adb22.png" NAME="Image19" ALIGN=LEFT WIDTH=297 HEIGHT=275 BORDER=0><BR CLEAR=LEFT><FONT SIZE=2>Blue
+point is a mass</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><B>Figure
+15:</B> <FONT SIZE=2>iCylinder3D</FONT></P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float (0 0 0)</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setVXYZ float float float (1 0 0)</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) orientation vector
+of the cylinder</P>
+<P STYLE="margin-bottom: 0cm">	setVX float 
+</P>
+<P STYLE="margin-bottom: 0cm">		set the X coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	sePmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum depth of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum depth of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant force to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential constant force
+to apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal rigidity (force
+proportional to R) to apply to a mass interacting 		with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKT float</P>
+<P STYLE="margin-bottom: 0cm">		change the tangential rigidity (force
+proportional to R)</P>
+<P STYLE="margin-bottom: 0cm">	setD float</P>
+<P STYLE="margin-bottom: 0cm">		change the link damping</P>
+<P STYLE="margin-bottom: 0cm">	setRN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal force proportional
+to 1/R to apply to the mass</P>
+<P STYLE="margin-bottom: 0cm">	setG float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal force proportional
+to <FONT SIZE=3>1/R<SUP>2</SUP>  </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	setdN float</FONT></P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without
+inertia.(normal displacement)</P>
+<P STYLE="margin-bottom: 0cm">	setdT float</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without
+inertia.(tangential displacement)</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	setdKN float</FONT></P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without
+inertia.(normal displacement proportional to R)</P>
+<P STYLE="margin-bottom: 0cm">	setdKT float</P>
+<P STYLE="margin-bottom: 0cm">		displace the mass without
+inertia.(tangential displacement proportional to R)</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass2D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tCylindre3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	this is the test object
+associated with iCylinder3D. It can test different things associated
+with the position / movement of a mass among a cylinder.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tCylindre3D,
+pmpd.tCylindre3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: VX: X coordinate of
+the creation vector  (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: VY: Y coordinate of
+the creation vector (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: VZ: Z coordinate of
+the creation vector (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: X: X0 coordinate of
+the center of the interactor  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Y: Y0 coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Z: Z0 coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Rmin: minimum radius
+of the interactors (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: Rmax: maximum radius
+of the interactor (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: Minimal depth (-10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: Maximal depth (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float float</P>
+<P STYLE="margin-bottom: 0cm">		position of a mass 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum depth of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum depth of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	1: float (0/1) tells if the mass is in
+the in the Circle or not (R &lt; Rmax &amp; R &gt; Rmin)</P>
+<P STYLE="margin-bottom: 0cm">	2: float: distance form the center of
+the cylinder</P>
+<P STYLE="margin-bottom: 0cm">	3: speed between the mass and the
+center of the cylinder</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iCircle3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between a part of the space and a class of masses.
+This interactor act as a link to a circle.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iCircle3D,
+pmpd.iCircle3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass to
+interact with </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: VX: X coordinate of
+the orientation vector of the circle (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: VY: Y coordinate of
+the orientation vector of the circle (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: VZ: Z coordinate of
+the orientation vector of the circle (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: X: X0 coordinate of
+the center of the interactor  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Y: Y0 coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Z: Z0 coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: Rmin: minimum radius
+of the interactors (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: Rmax: maximum radius
+of the interactor (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: normal constant force
+(force  along n vector) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: normal
+rigidity(normal force proportional to P (depth of the mass)) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: link damping (damping
+due to the link velocity) (0) </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	13: Maximal depth (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	14: normal constant
+displacement (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	15: normal displacement
+proportional to P (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><IMG SRC="pmpd_html_m5d319a3c.png" NAME="Image18" ALIGN=LEFT WIDTH=450 HEIGHT=400 BORDER=0><BR CLEAR=LEFT><FONT SIZE=2>Blue
+point is a mass</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><B>Figure
+16:</B> <FONT SIZE=2>iCircle3D</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setVXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) orientation vector
+of the cylinder</P>
+<P STYLE="margin-bottom: 0cm">	setVX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant force to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal rigidity to apply
+to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setdN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">	setdKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the displacement proportional
+to P 
+</P>
+<P STYLE="margin-bottom: 0cm">	setD float</P>
+<P STYLE="margin-bottom: 0cm">		change the link damping</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		change the maximum depth of the
+interactor</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass3D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tCircle3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	this is the test object
+associated with iCircle3D. It can test different things associated
+with the position / movement of a mass among a circle.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tCircle3D,
+pmpd.tCircle3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: VX: X coordinate of
+the orientation vector of the circle (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: VY: Y coordinate of
+the orientation vector of the circle (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: VZ: Z coordinate of
+the orientation vector of the circle (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: X: X0 coordinate of
+the center of the interactor  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Y: Y0 coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Z: Z0 coordinate of
+the center of the interactor (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Rmin: minimum radius
+of the interactors (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: Rmax: maximum radius
+of the interactor (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: Pmax: maximum depth 
+of the interactor (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float float</P>
+<P STYLE="margin-bottom: 0cm">		position of a mass 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setVXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) orientation vector
+of the cylinder</P>
+<P STYLE="margin-bottom: 0cm">	setVX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		change the maximal depth of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	1: float (0/1) tells if the mass is in
+the in the Circle or not (R&lt;Rmax &amp; R&gt;Rmin)</P>
+<P STYLE="margin-bottom: 0cm">	2: float: distance form the top of the
+circle</P>
+<P STYLE="margin-bottom: 0cm">	3: speed of the mass from the top of
+the circle</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iPlane3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between a part of the space and a class of masses.
+This interactor act as a link to a plane.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iPlane3D,
+pmpd.iPlane3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass to
+interact with </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: Xv: X coordinate of
+the creation vector  (normal to the plane) (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Yv: Y coordinate of
+the creation vector (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Zv: Z coordinate of
+the creation vector (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: X: X0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Y: Y0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Z: Z0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: normal constant force
+(force  along n vector) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: normal rigidity(normal
+force proportional to P (depth of the mass)) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: normal damping
+(damping due to the link velocity) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: Maximal depth (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: normal constant
+displacement (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	13: normal displacement
+proportional to P (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><IMG SRC="pmpd_html_m63a22dc1.png" NAME="Image20" ALIGN=LEFT WIDTH=481 HEIGHT=303 BORDER=0><BR CLEAR=LEFT><FONT SIZE=2>Blue
+point is a mass</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><SPAN STYLE="font-style: normal"><B>Figure
+17</B>:<FONT SIZE=2> iPlane3D</FONT></SPAN></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setVXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) orientation vector
+of the cylinder</P>
+<P STYLE="margin-bottom: 0cm">	setVX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum depth of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant force to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal rigidity to apply
+to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setdN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">	setdKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the displacement proportional
+to P 
+</P>
+<P STYLE="margin-bottom: 0cm">	setD float</P>
+<P STYLE="margin-bottom: 0cm">		change the link damping</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass3D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tPlane3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	this is the test object
+associated with iPlane3D. It can test different things associated
+with the position or movement of a mass among a plane.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tPlane3D,
+pmpd.tPlane3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass to
+interact with </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: VX: X coordinate of
+the creation vector  (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: VY: Y coordinate of
+the creation vector (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: VZ: Z coordinate of
+the creation vector (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: X: X0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Y: Y0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: Z: Z0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: Maximal depth (10000)</FONT></P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float float</P>
+<P STYLE="margin-bottom: 0cm">		position of a mass 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setVXYZ float float 
+</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) orientation vector
+of the cylinder</P>
+<P STYLE="margin-bottom: 0cm">	setVX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setVZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z coordinate of the
+orientation vector 
+</P>
+<P STYLE="margin-bottom: 0cm">	setPmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	1: float (0/1) tells if the mass is in
+the in the Plane or not (P&lt;0 &amp; P&gt;-Pmax)</P>
+<P STYLE="margin-bottom: 0cm">	2: float: depth of the point from the
+plane</P>
+<P STYLE="margin-bottom: 0cm">	3: depth speed</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	iSphere3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-left: 1.27cm; margin-bottom: 0cm"><FONT SIZE=3>Create
+an interaction between a part of the space and a class of masses.
+This interactor act as a 3D link to a point.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: iSphere3D,
+pmpd.iSphere3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments (default value):
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass to
+interact with </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: X: X0 coordinate of
+the center of the sphere (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Y: Y0 coordinate of
+the center of the sphere (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Z: Z0 coordinate of
+the center of the sphere (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Rmin: minimum length
+of the link (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Rmax: maximum length
+of the link (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	7: normal constant force
+(force  along n vector) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	8: normal rigidity
+(normal force proportional to P (depth of the mass)) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	9: normal force
+proportional to 1/R</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	10: normal damping
+(damping due to the link velocity) (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	11: normal constant
+displacement (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	12: normal force
+proportional to 1/R<SUP>2 </SUP>(0) </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	13: normal displacement
+proportional to P (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	14: normal displacement
+proportional to 1/R<SUP> </SUP>(0) </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	15: normal displacement
+proportional to 1/R<SUP>2 </SUP>(0) </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><IMG SRC="pmpd_html_m2a1fe959.png" NAME="Image21" ALIGN=LEFT WIDTH=359 HEIGHT=319 BORDER=0><BR CLEAR=LEFT><BR>
+</P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=2>Blue
+point is a mass, red point is the center of the iSphere3D</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm; font-style: normal"><FONT SIZE=2><B><FONT SIZE=3>Figure
+18:</FONT></B> iSphere3D</FONT></P>
+<P ALIGN=CENTER STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	bang</P>
+<P STYLE="margin-bottom: 0cm">		send to the masses the position and
+internal states of the interactors</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal constant force to
+apply to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal rigidity to apply
+to a mass interacting with this object 
+</P>
+<P STYLE="margin-bottom: 0cm">	setFRN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal force proportional
+to to apply to 1/R 
+</P>
+<P STYLE="margin-bottom: 0cm">		(R is the distance from the center of
+the sphere)</P>
+<P STYLE="margin-bottom: 0cm">	setDN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal damping</P>
+<P STYLE="margin-bottom: 0cm">	setdN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement 
+</P>
+<P STYLE="margin-bottom: 0cm">	setdRN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement
+proportional to 1/R to apply to the mass</P>
+<P STYLE="margin-bottom: 0cm">	setG float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal  force 
+proportional to 1/R<SUP>2</SUP></P>
+<P STYLE="margin-bottom: 0cm">	setdKN float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement
+proportional to R</P>
+<P STYLE="margin-bottom: 0cm">	setdG float</P>
+<P STYLE="margin-bottom: 0cm">		change the normal displacement
+proportional to 1/R<SUP>2</SUP>  to apply to the mass</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">outlet 1: 
+</P>
+<P STYLE="margin-bottom: 0cm">	output a method for the mass3D, to
+allow interaction with this object.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=4 STYLE="font-size: 16pt">	tSphere3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>description: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	this is the test object
+associated with iSphere3D. It can test different things associated
+with the position / movement of a mass among a point.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>creators: tSphere3D,
+pmpd.tSphere3D</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>arguments: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	1: name of the mass to
+interact with </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	2: X: X0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	3: Y: Y0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	4: Z: Z0 coordinate of a
+point of a plane  (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	5: Rmin (0)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>	6: Rmax (1)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">inlet 1:</P>
+<P STYLE="margin-bottom: 0cm">	position3D float float float</P>
+<P STYLE="margin-bottom: 0cm">		position of a mass 
+</P>
+<P STYLE="margin-bottom: 0cm">	setXYZ float float float</P>
+<P STYLE="margin-bottom: 0cm">		set the (X, Y, Z) position of the
+interactor.</P>
+<P STYLE="margin-bottom: 0cm">	setX float</P>
+<P STYLE="margin-bottom: 0cm">		set the X position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setY  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Y position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setZ  float</P>
+<P STYLE="margin-bottom: 0cm">		set the Z position of the interactor.
+</P>
+<P STYLE="margin-bottom: 0cm">	setRmin float</P>
+<P STYLE="margin-bottom: 0cm">		set the minimum radius of the
+interactor</P>
+<P STYLE="margin-bottom: 0cm"> 	setRmax float</P>
+<P STYLE="margin-bottom: 0cm">		set the maximum radius of the
+interactor 
+</P>
+<P STYLE="margin-bottom: 0cm">outlet: 
+</P>
+<P STYLE="margin-bottom: 0cm">	1: float (0/1) tells if the mass is in
+the in the Plane or not (P&lt;0 &amp; P&gt;-Pmax)</P>
+<P STYLE="margin-bottom: 0cm">	2: float: depth of the point from the
+plane</P>
+<P STYLE="margin-bottom: 0cm">	3: depth velocity 
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=5 STYLE="font-size: 20pt">Conclusion</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>pmpd provides basic
+objects for flexible behavior simulation of dynamic systems. Its
+basic components are specially suited for particular physical
+modelling. </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm">It can be used for the simulation of
+many different systems without requiring knowledge of the equations
+describing the movement.  Gravitation, structures, fluid dynamics,
+and Brownian movement are some examples of such systems.  It provides
+a flexible data generating tool for controlling audio synthesis
+modulation, rhythmic generation, or any other musical process, but
+can be also used simply for data processing.  Naturally, it can be
+use for video animations where physical behavior is desired, as well
+as to create smooth transitions and  natural evolution of these
+behaviors.</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm">Thanks to ben@ekran.org for the
+discussions, <A HREF="mailto:ali@cnmat.berkeley.edu">ali@cnmat.berkeley.edu</A>
+for porting this object for Max/MSP and helping with the
+documentation, and Thierry.Coduys@la-kitchen.fr for supporting this
+work.</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=5 STYLE="font-size: 20pt">Change
+since previous version</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>0.05: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>-add 3D interactors and
+test objects</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>-add examples</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>0.04:</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>-add 2D interactors and
+test objects</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>-add docs</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>-add examples</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>-add helps files</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>0.03: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>-each object receives a
+name and receives whatever is sent to this name, specially bang...
+(routing is then easier)</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>0.02: </FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"> <FONT SIZE=3>-things change in the
+initialisation procedure</FONT></P>
+<P STYLE="margin-bottom: 0cm"> <FONT SIZE=3>-creation arguments
+changes</FONT></P>
+<P STYLE="margin-bottom: 0cm"> <FONT SIZE=3>-add some messages to
+mass/link.</FONT></P>
+<P STYLE="margin-bottom: 0cm"> <FONT SIZE=3>-add the possibility for
+the link to learn its size from the model</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>0.01:</FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3>-basic objects.</FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=5 STYLE="font-size: 20pt">Licence</FONT></P>
+<P STYLE="margin-bottom: 0cm">                        
+</P>
+<P STYLE="margin-bottom: 0cm"> This program is written by Cyrille
+Henry (cyrille.henry@la-kitchen.fr)</P>
+<P STYLE="margin-bottom: 0cm"> 
+</P>
+<P STYLE="margin-bottom: 0cm"> Get sources at
+http://drpichon.free.fr/pmpd/</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"> This program is free software; you can
+redistribute it and/or                
+</P>
+<P STYLE="margin-bottom: 0cm"> modify it under the terms of the GNU
+General Public License                  
+</P>
+<P STYLE="margin-bottom: 0cm"> as published by the Free Software
+Foundation; either version 2               
+</P>
+<P STYLE="margin-bottom: 0cm"> of the License, or (at your option)
+any later version.                       
+</P>
+<P STYLE="margin-bottom: 0cm">                                       
+                                     
+</P>
+<P STYLE="margin-bottom: 0cm"> This program is distributed in the
+hope that it will be useful,              
+</P>
+<P STYLE="margin-bottom: 0cm"> but WITHOUT ANY WARRANTY; without even
+the implied warranty of               
+</P>
+<P STYLE="margin-bottom: 0cm"> MERCHANTABILITY or FITNESS FOR A
+PARTICULAR PURPOSE.  See the                
+</P>
+<P STYLE="margin-bottom: 0cm"> GNU General Public License for more
+details.                                 
+</P>
+<P STYLE="margin-bottom: 0cm">                                       
+                                      
+</P>
+<P STYLE="margin-bottom: 0cm"> You should have received a copy of the
+GNU General Public License           
+</P>
+<P STYLE="margin-bottom: 0cm"> along with this program; if not, write
+to the Free Software                  
+</P>
+<P STYLE="margin-bottom: 0cm"> Foundation, Inc., 59 Temple Place -
+Suite 330, Boston, MA  02111-1307, USA.  
+</P>
+<P STYLE="margin-bottom: 0cm">                                       
+                                      
+</P>
+<P STYLE="margin-bottom: 0cm"> Based on PureData by Miller Puckette
+and others.  
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm; page-break-before: always"><FONT SIZE=5 STYLE="font-size: 20pt">Links
+</FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=5 STYLE="font-size: 20pt"><A HREF="http://drpichon.free.fr/pmpd/"><FONT SIZE=3><FONT COLOR="#000000">[1]
+http://drpichon.free.fr/pmpd/</FONT></FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><FONT SIZE=3><A HREF="http://www.crca.ucsd.edu/~msp/software.html"><FONT COLOR="#000000">[2]
+http://www.crca.ucsd.edu/~msp/software.html</FONT></A></FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=5 STYLE="font-size: 20pt"><A HREF="http://web.ukonline.co.uk/taosynth/"><FONT SIZE=3><FONT COLOR="#000000">[3]
+http://web.ukonline.co.uk/taosynth/</FONT></FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT SIZE=3><A HREF="http://www-2.cs.cmu.edu/~fp/courses/02-graphics/pdf-2up/12-physical.pdf"><FONT COLOR="#000000">[4]
+http://www-2.cs.cmu.edu/~fp/courses/02-graphics/pdf-2up/12-physical.pdf</FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><A HREF="http://www.sodaplay.com/"><FONT COLOR="#000000">[5]
+http://www.sodaplay.com/</FONT></A></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000">[6]
+<A HREF="http://www.pure-data.org/downloads/"><FONT COLOR="#000000">http://www.pure-data.org/downloads/</FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><A HREF="http://ccrma-www.stanford.edu/~cc/misc-papers/ica04.pdf"><FONT COLOR="#000000">[7]
+http://ccrma-www.stanford.edu/~cc/misc-papers/ica04.pdf</FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000">[8]
+<A HREF="http://perso.wanadoo.fr/gmem/evenements/jim2002/articles/L09_Castagne.pdf"><FONT COLOR="#000000">http://perso.wanadoo.fr/gmem/evenements/jim2002/articles/L09_Castagne.pdf</FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><A HREF="http://acroe.imag.fr/ACROE/recherche/cordis-anima/cordis-anima.html"><FONT COLOR="#000000">[9]
+http://acroe.imag.fr/ACROE/recherche/cordis-anima/cordis-anima.html</FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><A HREF="http://profs.sci.univr.it/~fontana/paper/21.pdf"><FONT COLOR="#000000">[10]
+http://profs.sci.univr.it/~fontana/paper/21.pdf</FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000"><A HREF="http://www.music.columbia.edu/PeRColate/"><FONT COLOR="#000000">[11]
+http://www.music.columbia.edu/PeRColate/</FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000">[12]
+<A HREF="http://echo.gaps.ssr.upm.es/costg6/bibliography/proceedings/djoharian.pdf"><FONT COLOR="#000000">http://echo.gaps.ssr.upm.es/costg6/bibliography/proceedings/djoharian.pdf</FONT></A></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT COLOR="#000000">[14]
+<A HREF="http://gem.iem.at/"><U><FONT COLOR="#000000">http://gem.iem.at/</FONT></U></A></FONT></P>
+<DIV TYPE=FOOTER>
+	<P STYLE="margin-top: 0.5cm; margin-bottom: 0cm"><I>Cyrille Henry 02
+	/ 2004  </I>		<SDFIELD TYPE=PAGE SUBTYPE=RANDOM FORMAT=PAGE>4</SDFIELD>/<SDFIELD TYPE=DOCSTAT SUBTYPE=PAGE FORMAT=PAGE>55</SDFIELD></P>
+</DIV>
+</BODY>
+</HTML>

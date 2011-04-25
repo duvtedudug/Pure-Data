@@ -1,0 +1,35 @@
+#N canvas 349 339 582 384 10;
+#X obj 31 312 outlet;
+#X obj 31 186 pointer;
+#X obj 27 121 until;
+#X msg 12 153 next;
+#X obj 27 15 inlet;
+#X obj 229 290 outlet;
+#X obj 87 87 symbol \$2;
+#X msg 87 109 traverse pd-\$1;
+#X text 275 290 end bang;
+#X obj 27 60 t b b;
+#X obj 180 14 inlet;
+#X obj 180 52 symbol;
+#X obj 180 33 route set;
+#X text 304 40 Bang to serialize a data structure \; immediately \;
+\; \$1-Struct type name \; \$2-Target data subpatch name \; \$3 \,
+\$4 \, ..-Fields to serialize \; \; Use drip1 \, 2 \, .. to output
+1 \, 2 \, .. fields \; \; Use a [set xxxx( message to change \; target
+data subpatch (\$2) \; \; J F \; \; (idea from [list-drip]);
+#X text 221 15 set;
+#X obj 31 290 get \$1 \$3;
+#X connect 1 0 15 0;
+#X connect 1 1 2 1;
+#X connect 1 1 5 0;
+#X connect 2 0 3 0;
+#X connect 3 0 1 0;
+#X connect 4 0 9 0;
+#X connect 6 0 7 0;
+#X connect 7 0 1 0;
+#X connect 9 0 2 0;
+#X connect 9 1 6 0;
+#X connect 10 0 12 0;
+#X connect 11 0 6 1;
+#X connect 12 0 11 0;
+#X connect 15 0 0 0;

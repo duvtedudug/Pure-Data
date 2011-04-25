@@ -1,0 +1,71 @@
+#N struct timeValuePair float value float time;
+#N canvas 203 195 891 367 10;
+#X obj 38 8 inlet;
+#X obj 278 153 !=;
+#X text 78 111 clone to buffer filtered output;
+#X text 35 331 then clone back to original data subpatch window;
+#X obj 38 49 t b a;
+#X obj 274 110 t b a b;
+#N canvas 1 399 642 170 \$0-buffer 0;
+#X scalar timeValuePair 0 14 \;;
+#X scalar timeValuePair 0 13 \;;
+#X scalar timeValuePair 0 12 \;;
+#X scalar timeValuePair 0 11 \;;
+#X scalar timeValuePair 0 10 \;;
+#X scalar timeValuePair 0 27 \;;
+#X scalar timeValuePair 0 26 \;;
+#X scalar timeValuePair 0 25 \;;
+#X scalar timeValuePair 0 24 \;;
+#X scalar timeValuePair 0 23 \;;
+#X scalar timeValuePair 0 22 \;;
+#X scalar timeValuePair 0 21 \;;
+#X scalar timeValuePair 0 20 \;;
+#X scalar timeValuePair 0 19 \;;
+#X scalar timeValuePair 0 18 \;;
+#X scalar timeValuePair 0 17 \;;
+#X scalar timeValuePair 0 16 \;;
+#X scalar timeValuePair 0 15 \;;
+#X scalar timeValuePair 0 4 \;;
+#X scalar timeValuePair 0 3 \;;
+#X scalar timeValuePair 0 2 \;;
+#X scalar timeValuePair 0 1 \;;
+#X scalar timeValuePair 0 0 \;;
+#X scalar timeValuePair 0 31 \;;
+#X scalar timeValuePair 0 30 \;;
+#X scalar timeValuePair 0 9 \;;
+#X scalar timeValuePair 0 8 \;;
+#X scalar timeValuePair 0 7 \;;
+#X scalar timeValuePair 0 6 \;;
+#X scalar timeValuePair 0 5 \;;
+#X restore 220 27 pd \$0-buffer;
+#X obj 408 17 inlet;
+#X obj 408 39 route set;
+#X msg 408 61 set \$1;
+#X text 531 42 Delete scalars by index field number \; \; Assuming
+one field in the defined data structure \; is acting as an index \,
+when giving a number at input \, \; any scalars with this index number
+will be deleted \; from the data subpatch window \; \; Works for float
+inputs only \; \$1-Struct type name \; \$2-Destination subpatch name
+\; \$3-Field to act as index \; \$4 \, \$5 \, ..-Rest of fields defined
+in structure \; \; Use delete \, delete2 \, .. to address structures
+with \; 1 \, 2 \, .. fields defined \; \; Use a [set xxxx( message
+to change \; target data subpatch (\$2) \; \; J F \;;
+#X obj 102 195 jf/data/append \$1 \$0-buffer \$3;
+#X obj 102 153 jf/data/filter \$1 \$2 \$3;
+#X obj 38 308 jf/data/clone \$1 \$0-buffer \$2 \$3;
+#X msg 358 170 clear;
+#X connect 0 0 4 0;
+#X connect 1 0 12 1;
+#X connect 4 0 13 0;
+#X connect 4 1 5 0;
+#X connect 5 0 12 0;
+#X connect 5 1 1 1;
+#X connect 5 2 14 0;
+#X connect 7 0 8 0;
+#X connect 8 0 9 0;
+#X connect 9 0 12 1;
+#X connect 9 0 11 1;
+#X connect 9 0 13 1;
+#X connect 12 0 11 0;
+#X connect 12 1 1 0;
+#X connect 14 0 11 1;

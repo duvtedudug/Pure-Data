@@ -1,0 +1,74 @@
+#N struct timeValuePair float value float time;
+#N canvas 316 72 789 568 10;
+#X obj 11 23 inlet;
+#X obj 128 335 outlet;
+#X msg 280 109 set \$1;
+#N canvas 1 55 450 300 \$0-buffer 0;
+#X scalar timeValuePair 29 0 \;;
+#X scalar timeValuePair 2 0 \;;
+#X scalar timeValuePair -16 0 \;;
+#X scalar timeValuePair 7 0 \;;
+#X scalar timeValuePair 55 0 \;;
+#X scalar timeValuePair 32 0 \;;
+#X scalar timeValuePair -12 0 \;;
+#X scalar timeValuePair -29 0 \;;
+#X scalar timeValuePair -1 0 \;;
+#X scalar timeValuePair 36 0 \;;
+#X scalar timeValuePair 23 0 \;;
+#X scalar timeValuePair -28 0 \;;
+#X scalar timeValuePair -25 0 \;;
+#X scalar timeValuePair 39 0 \;;
+#X scalar timeValuePair 34 0 \;;
+#X scalar timeValuePair -16 0 \;;
+#X scalar timeValuePair -29 0 \;;
+#X scalar timeValuePair 13 0 \;;
+#X scalar timeValuePair 45 0 \;;
+#X scalar timeValuePair 36 0 \;;
+#X scalar timeValuePair 13 0 \;;
+#X scalar timeValuePair -29 0 \;;
+#X scalar timeValuePair -26 0 \;;
+#X scalar timeValuePair 13 0 \;;
+#X scalar timeValuePair 22 0 \;;
+#X scalar timeValuePair 17 0 \;;
+#X scalar timeValuePair 9 0 \;;
+#X scalar timeValuePair 4 0 \;;
+#X scalar timeValuePair -13 0 \;;
+#X scalar timeValuePair -16 0 \;;
+#X scalar timeValuePair -20 0 \;;
+#X scalar timeValuePair -25 0 \;;
+#X restore 522 44 pd \$0-buffer;
+#X obj 175 163 s pd-\$0-buffer;
+#X msg 175 143 clear;
+#X obj 111 116 t b b b b;
+#X obj 11 72 b;
+#X text 441 87 Maps an operation cross connected to the \; inlets and
+outlets onto data field values \; \; The operation can be performed
+on any \; number of data fields or all as required \; by cross connecting
+in/out 1 \, 2 \, 3 \, .. etc. \; \; \$1-Struct type name \; \$2-Target
+data subpatch name \; \$3 \, \$4 \, ..-Value fields to change \; \;
+Use map \, map2 \, map3 \, .. to effect 1 \, 2 \, .. fields \; \; Use
+a [set xxxx( message to change \; target data subpatch (\$2) \; \;
+N.B. make sure to cross connect all in/outs \; if using map2 \, 3 \,
+.. Use [t a] if necessary \; \; J F \; \; (idea from [list-map]);
+#X obj 128 404 t a;
+#X text 124 363 Cross connect operations here \; out1 goes to in1 \,
+out2 to in2 etc.;
+#X obj 11 50 route bang set;
+#X obj 128 289 jf/data/drip \$1 \$2 \$3;
+#X obj 128 446 jf/data/append \$1 \$0-buffer \$3;
+#X obj 111 513 jf/data/clone \$1 \$0-buffer \$2 \$3;
+#X connect 0 0 11 0;
+#X connect 2 0 12 1;
+#X connect 2 0 13 1;
+#X connect 2 0 14 1;
+#X connect 5 0 4 0;
+#X connect 6 0 14 0;
+#X connect 6 1 12 0;
+#X connect 6 2 13 1;
+#X connect 6 3 5 0;
+#X connect 7 0 6 0;
+#X connect 9 0 13 0;
+#X connect 11 0 7 0;
+#X connect 11 1 2 0;
+#X connect 11 2 9 0;
+#X connect 12 0 1 0;

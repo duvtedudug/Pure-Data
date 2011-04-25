@@ -1,0 +1,150 @@
+#N struct timeValuePair float value float time;
+#N canvas 363 9 894 714 10;
+#X obj 617 381 s globalTimingPosition;
+#N canvas 4 340 644 153 \$0-data 1;
+#X scalar timeValuePair 74 17 \;;
+#X scalar timeValuePair 42 16 \;;
+#X scalar timeValuePair 17 15 \;;
+#X scalar timeValuePair 19 14 \;;
+#X scalar timeValuePair 44 13 \;;
+#X scalar timeValuePair 67 12 \;;
+#X scalar timeValuePair 68 9 \;;
+#X scalar timeValuePair 51 8 \;;
+#X scalar timeValuePair 0 2 \;;
+#X scalar timeValuePair 2 1 \;;
+#X scalar timeValuePair 28 0 \;;
+#X scalar timeValuePair 63 31 \;;
+#X scalar timeValuePair 122 30 \;;
+#X scalar timeValuePair 127 29 \;;
+#X scalar timeValuePair 111 28 \;;
+#X scalar timeValuePair 60 27 \;;
+#X scalar timeValuePair 21 26 \;;
+#X scalar timeValuePair 0 24 \;;
+#X scalar timeValuePair 57 23 \;;
+#X scalar timeValuePair 127 22 \;;
+#X scalar timeValuePair 78 21 \;;
+#X scalar timeValuePair 16 20 \;;
+#X scalar timeValuePair 77 19 \;;
+#X scalar timeValuePair 23 4 \;;
+#X scalar timeValuePair 37 3 \;;
+#X scalar timeValuePair 87 25 \;;
+#X restore 414 95 pd \$0-data;
+#X floatatom 646 451 5 0 0 0 - - -;
+#N canvas 1 65 397 241 outputEvents 0;
+#X obj 331 125 ==;
+#X obj 39 33 r globalTimingPosition;
+#X text 193 72 output events;
+#X obj 178 204 outlet;
+#X obj 39 64 t b f;
+#X obj 39 125 jf/data/filter2 timeValuePair \$0-data time value;
+#X connect 0 0 5 1;
+#X connect 1 0 4 0;
+#X connect 4 0 5 0;
+#X connect 4 1 0 1;
+#X connect 5 1 3 0;
+#X connect 5 2 0 0;
+#X restore 618 430 pd outputEvents;
+#X obj 649 469 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 3700 1;
+#N canvas 1 439 388 139 timeValuePair 0;
+#X obj 6 7 struct timeValuePair float value float time;
+#X obj 6 29 drawnumber value time(0:31)(0:600) value(0:127)(100:10)
+;
+#X obj 6 49 drawnumber time time(0:31)(0:600) 120 64;
+#X text 12 92 (The numbers in brackets spread the graphics in the data
+subpatch window out so that they are more readable);
+#X restore 414 16 pd timeValuePair;
+#X msg 616 222 clear;
+#X obj 616 242 s pd-\$0-data;
+#X floatatom 23 481 5 0 31 0 - - -;
+#X obj 618 514 rj/s_drumelectro;
+#X msg 618 494 bd \$1;
+#X obj 618 536 dac~;
+#X obj 617 292 loadbang;
+#X obj 202 347 r globalTimingPosition;
+#X obj 25 374 hsl 128 15 0 127 0 0 empty empty empty -2 -8 0 10 -262144
+-1 -1 0 1;
+#X floatatom 202 373 5 0 0 0 - - -;
+#X obj 23 498 jf/data/delete2 timeValuePair \$0-data time value;
+#X obj 22 393 jf/data/change2 timeValuePair \$0-data time value;
+#X obj 617 313 metro 250;
+#X obj 617 335 f;
+#X obj 646 335 + 1;
+#X obj 617 357 mod 32;
+#X text 521 16 <-1. A simple data structure template that defines a
+pair of floats 'time' and 'value'. We will use these as notes of a
+32 step sequencer;
+#X text 482 97 <-2. Click here to see the data;
+#X text 26 415 ^^^3. Drag the slider to change values wherever the
+globalTimingPosition value is at that instant. Or tap in values in
+time with a number box.;
+#X msg 48 352 127;
+#X text 26 519 ^^^4. Enter index numbers 0-31 to delete values at that
+index position;
+#X obj 24 584 jf/data/map2 timeValuePair \$0-data time value;
+#X obj 24 566 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 348 584 + 1;
+#X obj 312 584 t a;
+#X text 46 566 <-5. Bang to increase all active values;
+#X obj 24 624 jf/data/map2 timeValuePair \$0-data time value;
+#X obj 24 606 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 312 624 t a;
+#X obj 348 624 - 1;
+#X text 46 606 <-6. Bang to decrease all active values;
+#X obj 24 664 jf/data/map2 timeValuePair \$0-data time value;
+#X obj 24 646 bng 15 250 50 0 empty empty empty 17 7 0 10 -262144 -1
+-1;
+#X obj 312 664 t a;
+#X text 375 664 <-7. Use any operation here to manipulate the data
+differently;
+#X obj 348 664 / 2;
+#X text 13 9 Sequencer example of the jf/data abstractions \; \; These
+abstractions aim to enable the use of data structures as multidimensional
+arrays of information. \; \; The idea is to create a data structure
+template where one field acts as lookup index just like the regular
+pure data table. But where standard tables can only hold one value
+per index data structure templates can define many pieces of information
+per index address. Any data field adjacent to the lookup index data
+field can be read/changed/deleted/operated on using these abstractions.
+\; \; These abstractions borrow heavily from the ideas inside Frank
+Barknecht's list-abs abstractions. Also massive hats-off to Frank for
+his excellent introduction tutorial on data structures which explained
+to me the tricky jargon a lot better than the bundled help files. Anyone
+who's been scared off data structures thus far I urge them to have
+a quick look at Frank's tutorial - http://puredata.info/community/projects/convention04/lectures/tk-barknecht/tut.tgz
+- which is an excellent primer \; \; J F \;;
+#X connect 3 0 2 0;
+#X connect 3 0 4 0;
+#X connect 3 0 10 0;
+#X connect 6 0 7 0;
+#X connect 8 0 16 0;
+#X connect 9 0 11 0;
+#X connect 9 0 11 1;
+#X connect 10 0 9 0;
+#X connect 12 0 18 0;
+#X connect 13 0 15 0;
+#X connect 13 0 17 1;
+#X connect 14 0 17 0;
+#X connect 18 0 19 0;
+#X connect 19 0 20 0;
+#X connect 19 0 21 0;
+#X connect 20 0 19 1;
+#X connect 21 0 0 0;
+#X connect 25 0 17 0;
+#X connect 27 0 30 0;
+#X connect 27 1 29 0;
+#X connect 28 0 27 0;
+#X connect 29 0 27 1;
+#X connect 30 0 27 0;
+#X connect 32 0 34 0;
+#X connect 32 1 35 0;
+#X connect 33 0 32 0;
+#X connect 34 0 32 0;
+#X connect 35 0 32 1;
+#X connect 37 0 39 0;
+#X connect 37 1 41 0;
+#X connect 38 0 37 0;
+#X connect 39 0 37 0;
+#X connect 41 0 37 1;
